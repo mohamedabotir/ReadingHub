@@ -9,7 +9,8 @@ using System.Reflection;
     public static class ServiceCollection
     {
         public static IServiceCollection PlugDIService(this IServiceCollection services) {
- 
+
+            services.AddTransient<ApplicationDbContext>();
             services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

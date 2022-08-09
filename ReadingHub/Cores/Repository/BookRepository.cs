@@ -21,7 +21,7 @@ namespace ReadingHub.Cores.Repository
         {
             var book = new Book();  
             model.BookMimeType = model.BookFile.ContentType;
-            book.BookMimeType = book.BookMimeType;
+            book.BookMimeType = model.BookMimeType;
 
             using (var dataStream = new MemoryStream())
             {
@@ -33,6 +33,7 @@ namespace ReadingHub.Cores.Repository
             book.Description = model.Description; 
             var createBook = await _context.Books.AddAsync(book);
 
+             _context.Complete();
             if (createBook.Entity.Id < 0)
             {
                 return -1;
