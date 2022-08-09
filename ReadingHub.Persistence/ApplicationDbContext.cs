@@ -21,5 +21,10 @@ namespace ReadingHub.Persistence
             
             base.OnModelCreating(builder);
         }
+
+        public async void Complete()
+        {
+            await this.SaveChangesAsync();
+        }
     }
 }

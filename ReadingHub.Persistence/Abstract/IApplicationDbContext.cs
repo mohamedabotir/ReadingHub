@@ -11,5 +11,6 @@ namespace ReadingHub.Persistence.Abstract
     public interface IApplicationDbContext
     {
         public DbSet<Book> Books { get; set; }
+        public void Complete();
     }
 }

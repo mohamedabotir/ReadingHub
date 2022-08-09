@@ -1,18 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
+using ReadingHub.Unit;
 
 namespace ReadingHub.Controllers
 {
     
     public class BookController : ApiController
     {
+        private IUnitOfWork unitOfWork;
+
+        public BookController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+
         [HttpPost]
         [Route("PublishBook")]
-       public IActionResult PublishBook([FromForm]BookViewModel model) {
+       public async Task<IActionResult> PublishBook([FromForm]BookViewModel model) {
               
-            
-            return Ok();
+             var bookResult = await unitOfWork.BookRepository.PublishBook(model);
+              if(bookResult <0)
+                return BadRequest(bookResult);
+            return Ok(bookResult);
         }
     }
 }

@@ -1,26 +1,28 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ReadingHub.Cores.Services;
 using ReadingHub.Persistence;
+using ReadingHub.Persistence.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ApplicationDbContext>(e => {
-    e.UseSqlServer(builder.Configuration["ConnectionStrings"]);
-});
-builder.Services.AddSwaggerGen(op =>
+builder.Services.AddDbContext<ApplicationDbContext>(e =>
 {
-   
-});
+    e.UseSqlServer(builder.Configuration["ConnectionStrings"]);
+}).AddIdentity<User,IdentityRole>()
+.AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.AddSwaggerService();
+
+builder.Services.PlugDIService();
+
 builder.Services.AddControllers();
 var app = builder.Build();
 
-app.UseSwagger(o =>
-{
-    
-});
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-    options.RoutePrefix = string.Empty;
-});
+app.UseSwaggerService();
 
 
 app.UseRouting();

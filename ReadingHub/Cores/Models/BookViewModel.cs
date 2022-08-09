@@ -6,7 +6,7 @@ namespace ReadingHub.Cores.Models
     public class BookViewModel
     {
         public IFormFile BookFile { get; set; }
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string AuthorId { get; set; }
          
         public string Description { get; set; }
