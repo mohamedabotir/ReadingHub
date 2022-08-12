@@ -9,6 +9,7 @@ namespace ReadingHub.Cores.Services
         public MapperService()
         {
             CreateMap<Book,BookViewModel>().ReverseMap();
+            CreateMap<Book,GetBooksViewModel>().ReverseMap();
             CreateMap<User,UserViewModel>().ReverseMap();
         }
     }

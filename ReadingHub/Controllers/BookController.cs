@@ -24,5 +24,32 @@ namespace ReadingHub.Controllers
                 return BadRequest(bookResult);
             return Ok(bookResult);
         }
+
+
+        [HttpGet]
+        [Route("GetAllBooks")]
+        public   async Task< IActionResult> GetAllBooks()
+        {
+
+            var bookResult = await  unitOfWork.BookRepository.GetBooks();
+            if (!bookResult.Any())
+                return BadRequest(bookResult);
+            return Ok(bookResult);
+        }
+        [HttpGet]
+        [Route("GetBookFile")]
+        public   FileContentResult GetBookFile(int bookId)
+        {
+            var book =   unitOfWork.BookRepository.GetBookFile(bookId);
+            if (book != null)
+            {
+                if (book.BookFile.Length == 0)
+                    return null;
+                return File(book.BookFile, book.BookMimeType);
+
+            }
+            else
+                return null;
+        }
     }
 }

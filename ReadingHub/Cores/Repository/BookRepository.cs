@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Persistence.Abstract;
 using ReadingHub.Persistence.Models;
@@ -39,6 +40,26 @@ namespace ReadingHub.Cores.Repository
                 return -1;
             }
             return createBook.Entity.Id;
+        }
+
+        public Task<IEnumerable<GetBooksViewModel>> GetBooks()
+        {
+            var books = _context.Books.AsQueryable();
+
+            return Task.FromResult(_mapper.Map<IEnumerable<Book>,IEnumerable<GetBooksViewModel>>(books));
+
+        }
+        public Book GetBookFile(int id)
+        {
+            var book = _context.Books.FirstOrDefault(e => e.Id == id);
+            
+
+            return book;
+        }
+
+        public Task<GetBookViewModel> GetBook(int bookId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
