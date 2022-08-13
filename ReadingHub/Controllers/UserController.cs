@@ -8,7 +8,7 @@ namespace ReadingHub.Controllers
      
     public class UserController : ApiController
     {
-        private IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
         public UserController(IUnitOfWork unitOfWork)
         {

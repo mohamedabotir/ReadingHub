@@ -49,14 +49,14 @@ namespace ReadingHub.Cores.Repository
             return Task.FromResult(_mapper.Map<IEnumerable<Book>,IEnumerable<GetBooksViewModel>>(books));
 
         }
-        public Book GetBookFile(int id)
+        public Book GetBookFile(int bookId)
         {
-            var book = _context.Books.FirstOrDefault(e => e.Id == id);
+            var book = _context.Books.FirstOrDefault(e => e.Id == bookId);
             
 
             return book;
         }
-
+        // TO DO Get Specific Book
         public Task<GetBookViewModel> GetBook(int bookId)
         {
             throw new NotImplementedException();
