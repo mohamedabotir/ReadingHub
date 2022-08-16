@@ -8,7 +8,7 @@ using ReadingHub.Persistence.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(e =>
 {
-    e.UseSqlServer(builder.Configuration["ConnectionStrings"]);
+    e.UseSqlServer(builder.Configuration["ConnectionStrings"]).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 }).AddIdentity<User,IdentityRole>()
 .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

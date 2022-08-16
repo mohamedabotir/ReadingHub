@@ -10,6 +10,8 @@ F:\ReadingHub\ReadingHub\Cores\Repository\UserRepository.cs
 F:\ReadingHub\ReadingHub\Cores\Services\ApplicationBuilder.cs
 F:\ReadingHub\ReadingHub\Cores\Services\MapperService.cs
 F:\ReadingHub\ReadingHub\Cores\Services\ServiceCollection.cs
+F:\ReadingHub\ReadingHub\Cores\Validations\Attributes\ValidateNotNullAttribute.cs
+F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\GuardException.cs
 F:\ReadingHub\ReadingHub\Program.cs
 F:\ReadingHub\ReadingHub\Unit\Abstracts\Repository\IBookRepository.cs
 F:\ReadingHub\ReadingHub\Unit\Abstracts\Repository\IUserRepository.cs
