@@ -84,12 +84,23 @@ namespace ReadingHub.Cores.Repository
 
             return book;
         }
-        // TO DO Get Specific Book
         public Task<GetBookViewModel> GetBook(int bookId)
         {
-            throw new NotImplementedException();
+            var book = _context.Books.FirstOrDefault(e => e.Id == bookId);
+
+            GuardException.NotFound(book, nameof(Book));
+
+            return Task.FromResult(_mapper.Map<Book, GetBookViewModel>(book));
         }
 
-        
+        public Task<bool> DeleteBook(int bookId)
+        {
+            var book = _context.Books.FirstOrDefault(e => e.Id == bookId);
+            GuardException.NotFound(book, nameof(Book));
+            _context.Books.Remove(book);
+            _context.Complete();
+
+            return Task.FromResult(true);
+        }
     }
 }

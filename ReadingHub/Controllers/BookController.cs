@@ -62,5 +62,24 @@ namespace ReadingHub.Controllers
                 return BadRequest(result);
              return Ok(result);
         }
+
+        [HttpGet]
+        [Route("GetBook")]
+        public async Task<IActionResult> GetBook(int bookId) {
+            var book = await unitOfWork.BookRepository.GetBook(bookId);
+            return Ok(book);
+        
+        }
+
+        [HttpGet]
+        [Route("DeleteBook")]
+        public async Task<IActionResult> DeleteBook(int bookId)
+        {
+            var book = await unitOfWork.BookRepository.DeleteBook(bookId);
+            return Ok(book);
+
+        }
+
+
     }
 }

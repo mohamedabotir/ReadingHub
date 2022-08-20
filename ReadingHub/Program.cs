@@ -20,12 +20,18 @@ builder.Services.AddSwaggerService();
 builder.Services.PlugDIService();
 
 builder.Services.AddControllers();
+
+builder.Services.AddAntiforgery();
+ 
 var app = builder.Build();
+
+ 
 
 app.UseSwaggerService();
 
 
 app.UseRouting();
+
 app.UseEndpoints(endpoints => { 
 endpoints.MapControllers();
 });
