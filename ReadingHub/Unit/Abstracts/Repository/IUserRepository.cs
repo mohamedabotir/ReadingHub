@@ -5,5 +5,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
     public interface IUserRepository
     {
         Task<bool> Register(UserViewModel model);
+
+        Task<string> Login(LoginViewModel model);
     }
 }
