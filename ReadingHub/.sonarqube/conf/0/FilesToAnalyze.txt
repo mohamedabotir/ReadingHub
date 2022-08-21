@@ -1,6 +1,8 @@
 ﻿F:\ReadingHub\ReadingHub.Persistence\Abstract\IApplicationDbContext.cs
+F:\ReadingHub\ReadingHub.Persistence\Abstract\IUserService.cs
 F:\ReadingHub\ReadingHub.Persistence\ApplicationDbContext.cs
 F:\ReadingHub\ReadingHub.Persistence\Configuration\BookConfiguration.cs
+F:\ReadingHub\ReadingHub.Persistence\Configuration\CommentConfiguration.cs
 F:\ReadingHub\ReadingHub.Persistence\Configuration\UserConfiguration.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220808152953_init.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220808152953_init.Designer.cs
@@ -8,6 +10,12 @@ F:\ReadingHub\ReadingHub.Persistence\Migrations\20220808153654_editDescription.c
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220808153654_editDescription.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220813141508_test.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220813141508_test.Designer.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821151200_AddCommentsTable.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821151200_AddCommentsTable.Designer.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTableWithAddDateTime.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTableWithAddDateTime.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\ApplicationDbContextModelSnapshot.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Book.cs
+F:\ReadingHub\ReadingHub.Persistence\Models\Comment.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\User.cs
+F:\ReadingHub\ReadingHub.Persistence\UserService.cs

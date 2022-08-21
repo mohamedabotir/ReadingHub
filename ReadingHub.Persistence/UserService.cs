@@ -1,8 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using ReadingHub.Controllers;
-using ReadingHub.Unit.Abstracts;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+ using ReadingHub.Unit.Abstracts;
+using System;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 

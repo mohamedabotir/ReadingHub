@@ -12,13 +12,15 @@ namespace ReadingHub.Unit
     {
          
 
-        public UnitOfWork(IApplicationDbContext context,IMapper map,UserManager<User> manager,IConfiguration config)
+        public UnitOfWork(IApplicationDbContext context,IMapper map,UserManager<User> manager,IConfiguration config,IUserService userService)
         {
             BookRepository = new BookRepository(context,map);
             UserRepository = new UserRepository(manager, map,config);
+            CommentRepository = new CommentRepository(context, map,userService);
         }
 
         public IBookRepository BookRepository { get ; set ; }
         public IUserRepository UserRepository { get ; set ; }
+        public ICommentRepository CommentRepository { get; set; }
     }
 }

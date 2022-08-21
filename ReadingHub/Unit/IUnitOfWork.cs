@@ -7,5 +7,6 @@ namespace ReadingHub.Unit
     {
         public IBookRepository BookRepository { get; set; }
         public IUserRepository UserRepository { get; set; }
+        public ICommentRepository CommentRepository { get; set; }
     }
 }

@@ -12,8 +12,14 @@ namespace ReadingHub.Cores.Services
                 .ForMember(m => m.BookFile, o => o.Ignore())
                 .ForMember(m => m.BookMimeType, o => o.Ignore()).ReverseMap();
             CreateMap<Book,GetBooksViewModel>().ReverseMap();
+
             CreateMap<Book,GetBookViewModel>().ReverseMap();
+
             CreateMap<User,UserViewModel>().ReverseMap();
+
+            CreateMap<Comment, CommentViewModel>()
+                .ReverseMap()
+                .ForMember(m => m.CommentDateTime , o => o.MapFrom(o=>DateTime.Now));
         }
         public Book validate(BookViewModel model)
         {
