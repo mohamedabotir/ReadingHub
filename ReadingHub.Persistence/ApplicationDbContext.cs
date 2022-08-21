@@ -52,6 +52,11 @@ namespace ReadingHub.Persistence
                 {
                     comment.UserId = _userService.GetUserId();
                 }
+
+                if(e.Entity is Book book && e.State == EntityState.Added)
+                {
+                    book.AuthorId = _userService.GetUserId();
+                }
             });
         
         }

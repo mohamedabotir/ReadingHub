@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Unit;
@@ -14,7 +15,9 @@ namespace ReadingHub.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-
+        
+        
+        [Authorize]
         [HttpPost]
         [Route("PublishBook")]
        public async Task<IActionResult> PublishBook([FromForm]BookViewModel model) {
