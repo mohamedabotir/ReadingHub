@@ -28,6 +28,8 @@ builder.Services.AddAntiforgery();
 
 builder.Services.AddAuthenticationService(builder.Configuration);
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
  
@@ -39,8 +41,10 @@ app.UseRouting();
 
 app.UseAuthentication ();
 app.UseAuthorization ();
-app.UseEndpoints(endpoints => { 
-endpoints.MapControllers();
+ app.UseEndpoints(endpoints => {
+     endpoints.MapHub<RealTimeCommunicationService>(new PathString("/communicate"));
+     endpoints.MapControllers();
+    
 });
 
 app.Run();

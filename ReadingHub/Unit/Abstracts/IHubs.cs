@@ -1,0 +1,9 @@
+﻿using ReadingHub.Cores.Models;
+
+namespace ReadingHub.Unit.Abstracts
+{
+    public interface IHubs
+    {
+        Task BroadcastNotification(CommunicationViewModel notification);
+    }
+}

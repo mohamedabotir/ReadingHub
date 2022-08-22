@@ -18,6 +18,8 @@ namespace ReadingHub.Controllers
         [Route("Comment")]
         public async Task<IActionResult> Comment(CommentViewModel comment) { 
         var commentResult = await unitOfWork.CommentRepository.Comment(comment);
+           await unitOfWork.CommunicationRepository.Notify(comment.BookId,"comment");
+
 
             if (commentResult < 0)
                 return BadRequest();
@@ -34,5 +36,7 @@ namespace ReadingHub.Controllers
 
             return Ok(commentResult);
         }
+
+
     }
 }
