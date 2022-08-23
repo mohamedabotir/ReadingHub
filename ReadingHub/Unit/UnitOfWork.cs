@@ -19,7 +19,7 @@ namespace ReadingHub.Unit
             BookRepository = new BookRepository(context,map);
             UserRepository = new UserRepository(manager, map,config);
             CommentRepository = new CommentRepository(context, map,userService);
-            CommunicationRepository = new CommunicationRepository(hub,userService,context);
+            CommunicationRepository = new CommunicationRepository(hub,userService,context,map);
         }
 
         public IBookRepository BookRepository { get ; set ; }

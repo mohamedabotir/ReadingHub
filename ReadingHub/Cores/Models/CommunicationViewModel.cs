@@ -1,4 +1,6 @@
-﻿namespace ReadingHub.Cores.Models
+﻿using ReadingHub.Persistence.Models;
+
+namespace ReadingHub.Cores.Models
 {
     public class CommunicationViewModel
     {
@@ -6,6 +8,6 @@
 
         public string ReceiverId { get; set; }
 
-        public string Type { get; set; }
+        public NotificationType Type { get; set; }
     }
 }

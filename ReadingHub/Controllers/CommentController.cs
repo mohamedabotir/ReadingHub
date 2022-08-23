@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
+using ReadingHub.Persistence.Models;
 using ReadingHub.Unit;
 
 namespace ReadingHub.Controllers
@@ -18,7 +19,7 @@ namespace ReadingHub.Controllers
         [Route("Comment")]
         public async Task<IActionResult> Comment(CommentViewModel comment) { 
         var commentResult = await unitOfWork.CommentRepository.Comment(comment);
-           await unitOfWork.CommunicationRepository.Notify(comment.BookId,"comment");
+           await unitOfWork.CommunicationRepository.Notify(comment.BookId,NotificationType.Comment);
 
 
             if (commentResult < 0)

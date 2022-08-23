@@ -15,6 +15,7 @@ namespace ReadingHub.Persistence
         private readonly IUserService _userService;
         public DbSet<Book> Books { get ; set ; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;

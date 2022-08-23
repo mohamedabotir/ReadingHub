@@ -12,6 +12,7 @@ namespace ReadingHub.Persistence.Abstract
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public void Complete();
     }
 }

@@ -19,6 +19,7 @@ F:\ReadingHub\ReadingHub\Cores\Services\MapperService.cs
 F:\ReadingHub\ReadingHub\Cores\Services\RealTimeCommunicationService.cs
 F:\ReadingHub\ReadingHub\Cores\Services\ServiceCollection.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Attributes\ValidateNotNullAttribute.cs
+F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\CanNotCreateException.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\GuardException.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\NotFoundException.cs
 F:\ReadingHub\ReadingHub\Program.cs

@@ -20,6 +20,8 @@ namespace ReadingHub.Cores.Services
             CreateMap<Comment, CommentViewModel>()
                 .ReverseMap()
                 .ForMember(m => m.CommentDateTime , o => o.MapFrom(o=>DateTime.Now));
+
+            CreateMap<Notification, CommunicationViewModel>().ReverseMap();
         }
         public Book validate(BookViewModel model)
         {

@@ -14,8 +14,11 @@ F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821151200_AddCommentsTable.
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821151200_AddCommentsTable.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTableWithAddDateTime.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTableWithAddDateTime.Designer.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220823161442_addNotification.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220823161442_addNotification.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\ApplicationDbContextModelSnapshot.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Book.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Comment.cs
+F:\ReadingHub\ReadingHub.Persistence\Models\Notification.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\User.cs
 F:\ReadingHub\ReadingHub.Persistence\UserService.cs

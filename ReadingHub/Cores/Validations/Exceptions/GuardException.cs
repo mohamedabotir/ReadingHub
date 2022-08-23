@@ -14,6 +14,13 @@ namespace ReadingHub.Cores.Validations.Exceptions
         {
             if (value == null)
                 throw new NotFoundException(name);
+
+
+        }
+
+        public static void CanNotCreate(bool isNull , string name){ 
+        if(isNull)
+                throw new CanNotCreateException(name);
         }
     }
 }
