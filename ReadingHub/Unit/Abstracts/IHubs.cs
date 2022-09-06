@@ -5,5 +5,7 @@ namespace ReadingHub.Unit.Abstracts
     public interface IHubs
     {
         Task BroadcastNotification(CommunicationViewModel notification);
+
+        Task UserConnected(string userId);
     }
 }

@@ -17,7 +17,9 @@ namespace ReadingHub.Persistence.Models
 
         public string BookName { get; set; }
         public string BookMimeType { get; set; }
-        
+
+        public int PageNumbers { get; set; }
+
         public byte[] BookFile { get; set; }
     }
 }

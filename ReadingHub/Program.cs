@@ -30,18 +30,32 @@ builder.Services.AddAuthenticationService(builder.Configuration);
 
 builder.Services.AddSignalR();
 
-var app = builder.Build();
 
- 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("_myAllowSpecificOrigins",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((x) => true)
+                .AllowCredentials();
+        });
+});
+
+var app = builder.Build();
 
 app.UseSwaggerService();
 
-
 app.UseRouting();
+
+app.UseCors("_myAllowSpecificOrigins");
 
 app.UseAuthentication ();
 app.UseAuthorization ();
- app.UseEndpoints(endpoints => {
+
+app.UseEndpoints(endpoints => {
      endpoints.MapHub<RealTimeCommunicationService>(new PathString("/communicate"));
      endpoints.MapControllers();
     
