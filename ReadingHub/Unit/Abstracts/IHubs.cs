@@ -7,5 +7,8 @@ namespace ReadingHub.Unit.Abstracts
         Task BroadcastNotification(CommunicationViewModel notification);
 
         Task UserConnected(string userId);
+
+       
+        Task GetConnections(Dictionary<string, List<string>>.KeyCollection keys);
     }
 }
