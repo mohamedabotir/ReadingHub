@@ -7,5 +7,10 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<bool> Register(UserViewModel model);
 
         Task<string> Login(LoginViewModel model);
+
+        Task<IEnumerable<ProfileViewModel>> GetUserProfileOrUsersProfiles(ProfileType type,string id="");
+    }
+    public enum ProfileType { 
+    user,Users
     }
 }

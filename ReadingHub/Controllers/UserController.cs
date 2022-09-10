@@ -44,5 +44,13 @@ namespace ReadingHub.Controllers
             return Ok(HttpContext.User.Claims.First(e=>e.Type=="userId").Value);
         }
 
+        [Route(nameof(GetUsersProfiles))]
+        [HttpGet]
+        public async Task<IActionResult> GetUsersProfiles() {
+            var profiles = await unitOfWork.UserRepository.GetUserProfileOrUsersProfiles(Unit.Abstracts.Repository.ProfileType.Users);
+
+            return Ok(profiles);
+        }
+
     }
 }

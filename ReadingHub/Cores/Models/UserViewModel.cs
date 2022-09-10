@@ -41,12 +41,12 @@
             set;
         }
 
-         
-        
 
-        
-        
-         
-         
+
+
+        public string PhotoUrl { get; set; }
+
+
+
     }
 }

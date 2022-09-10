@@ -7,7 +7,7 @@
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>http://127.0.0.1:9000</SonarQubeHostUrl>
   <SonarQubeVersion>9.5.0.56709</SonarQubeVersion>
-  <SonarProjectKey>bookHub</SonarProjectKey>
+  <SonarProjectKey>bookub</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
@@ -110,7 +110,7 @@
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.updatecenter.url">https://update.sonarsource.org/update-center.properties</Property>
     <Property Name="sonar.core.id">147B411E-AYKW79K8uJ3IF57yBrFD</Property>
-    <Property Name="sonar.core.startTime">8/23/2022 8:28:16 PM</Property>
+    <Property Name="sonar.core.startTime">9/10/2022 6:47:28 PM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://127.0.0.1:9000</Property>

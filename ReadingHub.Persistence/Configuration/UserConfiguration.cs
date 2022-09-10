@@ -14,6 +14,7 @@ namespace ReadingHub.Persistence.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasIndex(x => x.UserName).IsUnique(true);
+            builder.HasMany(e => e.Books).WithOne(e => e.Author);
         }
     }
 }

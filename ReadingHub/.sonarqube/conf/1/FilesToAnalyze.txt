@@ -9,6 +9,7 @@ F:\ReadingHub\ReadingHub\Cores\Models\CommunicationViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\GetBooksViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\GetBookViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\LoginViewModel.cs
+F:\ReadingHub\ReadingHub\Cores\Models\ProfileViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\UserViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Repository\BookRepository.cs
 F:\ReadingHub\ReadingHub\Cores\Repository\CommentRepository.cs

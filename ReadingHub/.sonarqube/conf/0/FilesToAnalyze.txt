@@ -16,6 +16,10 @@ F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTab
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220821152122_ModifyCommentsTableWithAddDateTime.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220823161442_addNotification.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\20220823161442_addNotification.Designer.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220906153421_addPageNumberFieldsToBook.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220906153421_addPageNumberFieldsToBook.Designer.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220910161759_add-photoUrlAndHandleRealtionOfBookAndAuthor12M.cs
+F:\ReadingHub\ReadingHub.Persistence\Migrations\20220910161759_add-photoUrlAndHandleRealtionOfBookAndAuthor12M.Designer.cs
 F:\ReadingHub\ReadingHub.Persistence\Migrations\ApplicationDbContextModelSnapshot.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Book.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Comment.cs
