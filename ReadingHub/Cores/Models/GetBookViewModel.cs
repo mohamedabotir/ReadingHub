@@ -10,5 +10,7 @@
 
         public string BookName { get; set; }
         public string BookMimeType { get; set; }
+        public string Photo { get; set; }
+
     }
 }

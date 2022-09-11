@@ -21,5 +21,6 @@ namespace ReadingHub.Persistence.Models
         public int PageNumbers { get; set; }
 
         public byte[] BookFile { get; set; }
+
     }
 }
