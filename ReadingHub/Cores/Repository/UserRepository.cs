@@ -17,12 +17,16 @@ namespace ReadingHub.Cores.Repository
         public IMapper _mapper { get; set; }
         private readonly   IConfiguration _configuration;
         private readonly IApplicationDbContext _context;
-        public UserRepository(IApplicationDbContext context,UserManager<User> userManager,IMapper mapper,IConfiguration configuration)
+        private IHostEnvironment Environment;
+        private readonly IUserService _userService;
+        public UserRepository(IUserService user,IHostEnvironment env,IApplicationDbContext context,UserManager<User> userManager,IMapper mapper,IConfiguration configuration)
         {
             _userManager = userManager;
             _mapper = mapper;
             _configuration = configuration;
             _context = context;
+            Environment = env;
+            _userService = user;
         }
                
         public async Task<bool> Register(UserViewModel model)
@@ -30,6 +34,8 @@ namespace ReadingHub.Cores.Repository
            var user = await _userManager.CreateAsync(_mapper.Map<UserViewModel,User>(model),model.Password);
             if (user.Succeeded)
             {
+                var getUser = _context.Users.First(e=>e.Email == model.Email);
+               await SaveFileToDisk(model.Photo, getUser.Id);
                 return true;
             }
             return false;
@@ -77,13 +83,100 @@ namespace ReadingHub.Cores.Repository
                 {
                     if (result.Count == 3)
                         break;
-                    result.Add(_mapper.Map<User, ProfileViewModel>(_context.Users.First(e=>e.Id==item.Key)));
+                    var author = _mapper.Map<User, ProfileViewModel>(_context.Users.First(e => e.Id == item.Key));
+                    author.PictureUrl = "profile/"+ GetAuthorPicture(author.Id);
+                    result.Add(author);
                 }          
+            }
+            string GetAuthorPicture(string id)
+            {
+                var files = Directory.GetFiles(GetProfileContentsDirectory());
+
+                foreach (var file in files)
+                {
+
+                    if (file.Contains(id.ToString()))
+                    {
+                        return id + "." + file.Split(".")[1];
+                    }
+                }
+
+                return null;
             }
 
 
 
             return Task.FromResult(result.AsEnumerable<ProfileViewModel>());
+        }
+
+        public Task<bool> CheckEmailAddress(string email)
+        {
+            var check = _userManager.FindByEmailAsync(email);
+            if(check is null)
+                return Task.FromResult(false);
+            return Task.FromResult(true);
+        }
+
+        public async Task EditProfile(EditProfileViewModel editProfileViewModel)
+        {
+
+            var user = _context.Users.FirstOrDefault(e => e.Id == _userService.GetUserId());
+            var userBuilder = new UserBuilder(user);
+
+            if(editProfileViewModel.Address != null)
+                userBuilder.Address(editProfileViewModel.Address);
+            if (editProfileViewModel.UserName != null)
+                userBuilder.Myname(editProfileViewModel.UserName);
+            if(editProfileViewModel.PhoneNumber!=null)
+                userBuilder.PhoneNumber(editProfileViewModel.PhoneNumber);
+
+          var result =  _context.Users.Update(userBuilder.Build());
+            _context.Complete();
+
+            if (result.Entity.Id == _userService.GetUserId()) {
+
+                if (editProfileViewModel.Photo != null) {
+                  await  UpdatePicture(editProfileViewModel.Photo, user.Id);
+                }
+            }
+        
+        }
+
+        public async Task UpdatePicture(IFormFile file, string identifier) { 
+            string path = GetProfileContentsDirectory();
+            Directory.CreateDirectory(path);
+            var files = Directory.GetFiles(path);
+            if (files.Count() == 0)
+            { 
+             await SaveFileToDisk(file, identifier);
+
+            }
+            else
+
+                foreach (var item in files)
+                {
+                    if (item.Contains(identifier))
+                    {
+                        File.Delete(Path.Combine(GetProfileContentsDirectory(), identifier + "." + item.Split(".")[1]));
+                    }
+                    await SaveFileToDisk(file, identifier);
+
+                }
+        }
+
+        public async Task SaveFileToDisk(IFormFile file, string identifier)
+        {
+            string path = GetProfileContentsDirectory();
+            Directory.CreateDirectory(path);
+            using (Stream fileStream = new FileStream(Path.Combine(path, identifier + $".{file.FileName.Split('.')[1]}"), FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+        }
+
+        public string GetProfileContentsDirectory()
+        {
+            return Environment.ContentRootPath + "wwwroot/profile";
         }
     }
 }

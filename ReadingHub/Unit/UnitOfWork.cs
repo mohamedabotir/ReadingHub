@@ -17,7 +17,7 @@ namespace ReadingHub.Unit
         public UnitOfWork(IHostEnvironment env,IApplicationDbContext context,IMapper map,UserManager<User> manager,IConfiguration config,IUserService userService, IHubContext<RealTimeCommunicationService, IHubs> hub)
         {
             BookRepository = new BookRepository(userService,env,context,map);
-            UserRepository = new UserRepository(context,manager, map,config);
+            UserRepository = new UserRepository(userService,env,context,manager, map,config);
             CommentRepository = new CommentRepository(context, map,userService);
             CommunicationRepository = new CommunicationRepository(hub,userService,context,map);
         }

@@ -23,6 +23,7 @@ namespace ReadingHub.Cores.Services
 
             CreateMap<Notification, CommunicationViewModel>().ReverseMap();
         CreateMap<ProfileViewModel,User>().ReverseMap();
+            CreateMap<EditProfileViewModel,User>().ReverseMap();
         }
         public Book validate(BookViewModel model)
         {

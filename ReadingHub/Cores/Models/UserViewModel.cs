@@ -44,7 +44,7 @@
 
 
 
-        public string PhotoUrl { get; set; }
+        public IFormFile Photo { get; set; }
 
 
 

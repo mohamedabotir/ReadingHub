@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ReadingHub.Controllers
 {
-     
+
     public class UserController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -39,9 +39,9 @@ namespace ReadingHub.Controllers
         [Produces("application/json")]
         [HttpGet]
         [Authorize]
-        public   IActionResult GetUserId()
+        public IActionResult GetUserId()
         {
-            return Ok(HttpContext.User.Claims.First(e=>e.Type=="userId").Value);
+            return Ok(HttpContext.User.Claims.First(e => e.Type == "userId").Value);
         }
 
         [Route(nameof(GetUsersProfiles))]
@@ -50,6 +50,23 @@ namespace ReadingHub.Controllers
             var profiles = await unitOfWork.UserRepository.GetUserProfileOrUsersProfiles(Unit.Abstracts.Repository.ProfileType.Users);
 
             return Ok(profiles);
+        }
+
+        [HttpGet]
+        [Route(nameof(CheckEmail))]
+        public async Task<IActionResult> CheckEmail(string emailAddress) { 
+        var isFound =await unitOfWork.UserRepository.CheckEmailAddress(emailAddress);
+
+        return Ok(isFound);
+        }
+        [HttpPut]
+        [Route(nameof(UpdateProfile))]
+        [Authorize]
+        public  IActionResult UpdateProfile([FromForm]EditProfileViewModel model) {
+
+            var edit =  unitOfWork.UserRepository.EditProfile(model);
+
+            return Ok();
         }
 
     }

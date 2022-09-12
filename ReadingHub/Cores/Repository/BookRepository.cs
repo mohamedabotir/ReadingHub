@@ -66,7 +66,7 @@ namespace ReadingHub.Cores.Repository
             _context.Complete(); 
             return Task.FromResult(true);
         }
-         async void SaveFileToDisk(IFormFile file,int identifier) {
+        public  async void SaveFileToDisk(IFormFile file,int identifier) {
             string path = GetBookContentsDirectory();
             Directory.CreateDirectory(path);
             using (Stream fileStream = new FileStream(Path.Combine(path,identifier.ToString()+$".{file.FileName.Split('.')[1]}"), FileMode.Create))
