@@ -6,6 +6,7 @@ F:\ReadingHub\ReadingHub\Controllers\UserController.cs
 F:\ReadingHub\ReadingHub\Cores\Models\BookViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\CommentViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\CommunicationViewModel.cs
+F:\ReadingHub\ReadingHub\Cores\Models\EditProfileViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\GetBooksViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\GetBookViewModel.cs
 F:\ReadingHub\ReadingHub\Cores\Models\LoginViewModel.cs
@@ -19,6 +20,7 @@ F:\ReadingHub\ReadingHub\Cores\Services\ApplicationBuilder.cs
 F:\ReadingHub\ReadingHub\Cores\Services\MapperService.cs
 F:\ReadingHub\ReadingHub\Cores\Services\RealTimeCommunicationService.cs
 F:\ReadingHub\ReadingHub\Cores\Services\ServiceCollection.cs
+F:\ReadingHub\ReadingHub\Cores\Services\UserBuilder.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Attributes\ValidateNotNullAttribute.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\CanNotCreateException.cs
 F:\ReadingHub\ReadingHub\Cores\Validations\Exceptions\GuardException.cs
@@ -35,6 +37,8 @@ F:\ReadingHub\ReadingHub\obj\Debug\net6.0\ReadingHub.GlobalUsings.g.cs
 F:\ReadingHub\ReadingHub\obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
 F:\ReadingHub\ReadingHub\obj\Debug\net6.0\ReadingHub.AssemblyInfo.cs
 F:\ReadingHub\ReadingHub\obj\Debug\net6.0\ReadingHub.MvcApplicationPartsAssemblyInfo.cs
+F:\ReadingHub\ReadingHub\wwwroot\booksImgs\22.jfif
+F:\ReadingHub\ReadingHub\wwwroot\profile\bd1097d7-b1a4-4cb6-8646-d61a307c7223.png
 F:\ReadingHub\ReadingHub\appsettings.Development.json
 F:\ReadingHub\ReadingHub\appsettings.json
 F:\ReadingHub\ReadingHub\Dockerfile

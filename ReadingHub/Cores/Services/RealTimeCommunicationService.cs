@@ -6,7 +6,7 @@ namespace ReadingHub.Cores.Services
 {
     public class RealTimeCommunicationService :Hub<IHubs>
     {
-        public  static Dictionary<string,List<string>> connections = new Dictionary<string,List<string>>();
+          static readonly Dictionary<string,List<string>> connections = new Dictionary<string,List<string>>();
         public RealTimeCommunicationService()
         {
 

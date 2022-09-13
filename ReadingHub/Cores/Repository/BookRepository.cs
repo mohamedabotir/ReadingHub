@@ -14,7 +14,7 @@ namespace ReadingHub.Cores.Repository
     {
         private readonly IApplicationDbContext _context;
         public readonly IMapper _mapper;
-        private IHostEnvironment Environment;
+        private readonly IHostEnvironment Environment;
         private readonly IUserService _userService;
 
         public BookRepository(IUserService userService,IHostEnvironment env,IApplicationDbContext context,IMapper mapper)
@@ -33,14 +33,14 @@ namespace ReadingHub.Cores.Repository
 
              FileConvert(ref book,model.BookFile);
 
-             var createBook = await _context.Books.AddAsync(book);
+             var createBook =  _context.Books.Add(book);
 
              _context.Complete();
             if (createBook.Entity.Id < 0)
             {
                 return -1;
             }
-            SaveFileToDisk(model.Photo,createBook.Entity.Id);
+           await SaveFileToDisk(model.Photo,createBook.Entity.Id);
 
             return createBook.Entity.Id;
         }
@@ -66,7 +66,7 @@ namespace ReadingHub.Cores.Repository
             _context.Complete(); 
             return Task.FromResult(true);
         }
-        public  async void SaveFileToDisk(IFormFile file,int identifier) {
+        public  async Task SaveFileToDisk(IFormFile file,int identifier) {
             string path = GetBookContentsDirectory();
             Directory.CreateDirectory(path);
             using (Stream fileStream = new FileStream(Path.Combine(path,identifier.ToString()+$".{file.FileName.Split('.')[1]}"), FileMode.Create))
@@ -119,13 +119,10 @@ namespace ReadingHub.Cores.Repository
         string GetBookName(int bookId) {
            var files =  Directory.GetFiles(GetBookContentsDirectory());
 
-            foreach (var file in files)
-            {
-                
-                if (file.Contains(bookId.ToString())) { 
-                return bookId+"."+file.Split(".")[1];
-                }
-            }
+            var file = files.FirstOrDefault(x => x.Contains(bookId.ToString()));
+            if(file!=null)
+                return bookId + "." + file.Split(".")[1];
+
 
             return null;
         }

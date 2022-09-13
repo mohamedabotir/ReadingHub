@@ -26,7 +26,7 @@ namespace ReadingHub.Persistence
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new BookConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
-            
+            builder.ApplyConfiguration(new PostConfiguration());
             base.OnModelCreating(builder);
         }
 

@@ -64,7 +64,7 @@ namespace ReadingHub.Controllers
         [Authorize]
         public  IActionResult UpdateProfile([FromForm]EditProfileViewModel model) {
 
-            var edit =  unitOfWork.UserRepository.EditProfile(model);
+            unitOfWork.UserRepository.EditProfile(model);
 
             return Ok();
         }

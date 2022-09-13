@@ -9,9 +9,11 @@ namespace ReadingHub.Persistence.Models
         public string Address { get; set; }
         public string PhotoUrl { get; set; }
        public ICollection<Book>Books { set; get; }
+        public ICollection<Post> Posts { get; set; }
         public User()
         {
             Books = new List<Book>();
+            Posts = new List<Post>();
         }
     }
 }

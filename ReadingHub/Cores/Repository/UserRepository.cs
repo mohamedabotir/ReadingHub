@@ -17,7 +17,7 @@ namespace ReadingHub.Cores.Repository
         public IMapper _mapper { get; set; }
         private readonly   IConfiguration _configuration;
         private readonly IApplicationDbContext _context;
-        private IHostEnvironment Environment;
+        private readonly IHostEnvironment Environment;
         private readonly IUserService _userService;
         public UserRepository(IUserService user,IHostEnvironment env,IApplicationDbContext context,UserManager<User> userManager,IMapper mapper,IConfiguration configuration)
         {
@@ -63,19 +63,19 @@ namespace ReadingHub.Cores.Repository
             if(type== ProfileType.user)
             {
                 result = (List<ProfileViewModel>)_mapper.Map<IEnumerable<User>, IEnumerable<ProfileViewModel>>(_context.Users.Where(e => e.Id == id).AsEnumerable());
+                Task.FromResult(result.AsEnumerable<ProfileViewModel>());
             }
-            else
-            {
+           
                 var dic = new Dictionary<string, int>();
                 var books = _context.Books.AsEnumerable();
-                foreach (var item in books)
+                foreach (var item in books.Select(e=>e.AuthorId))
                 {
-                    if (dic.ContainsKey(item.AuthorId)) {
-                        dic[item.AuthorId]++;
+                    if (dic.ContainsKey(item)) {
+                        dic[item]++;
                     }
                     else
                     {
-                        dic.Add(item.AuthorId, 1);
+                        dic.Add(item, 1);
                     }
 
                 }
@@ -87,26 +87,24 @@ namespace ReadingHub.Cores.Repository
                     author.PictureUrl = "profile/"+ GetAuthorPicture(author.Id);
                     result.Add(author);
                 }          
-            }
-            string GetAuthorPicture(string id)
-            {
-                var files = Directory.GetFiles(GetProfileContentsDirectory());
-
-                foreach (var file in files)
-                {
-
-                    if (file.Contains(id.ToString()))
-                    {
-                        return id + "." + file.Split(".")[1];
-                    }
-                }
-
-                return null;
-            }
+            
+          
 
 
 
             return Task.FromResult(result.AsEnumerable<ProfileViewModel>());
+        }
+
+        string GetAuthorPicture(string id)
+        {
+            var files = Directory.GetFiles(GetProfileContentsDirectory());
+
+            var file = files.FirstOrDefault(x => x.Contains(id.ToString()));
+            if (file != null)
+                return id + "." + file.Split(".")[1];
+            
+
+            return null;
         }
 
         public Task<bool> CheckEmailAddress(string email)
@@ -133,11 +131,9 @@ namespace ReadingHub.Cores.Repository
           var result =  _context.Users.Update(userBuilder.Build());
             _context.Complete();
 
-            if (result.Entity.Id == _userService.GetUserId()) {
+            if (result.Entity.Id == _userService.GetUserId() && editProfileViewModel.Photo != null) {
 
-                if (editProfileViewModel.Photo != null) {
-                  await  UpdatePicture(editProfileViewModel.Photo, user.Id);
-                }
+                  await  UpdatePicture(editProfileViewModel.Photo, user.Id);               
             }
         
         }
@@ -146,7 +142,7 @@ namespace ReadingHub.Cores.Repository
             string path = GetProfileContentsDirectory();
             Directory.CreateDirectory(path);
             var files = Directory.GetFiles(path);
-            if (files.Count() == 0)
+            if (!files.Any())
             { 
              await SaveFileToDisk(file, identifier);
 

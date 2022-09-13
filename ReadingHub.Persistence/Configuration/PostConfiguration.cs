@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 
 namespace ReadingHub.Persistence.Configuration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    internal class PostConfiguration : IEntityTypeConfiguration<Post>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.HasIndex(x => x.UserName).IsUnique(true);
-            builder.HasMany(e => e.Books).WithOne(e => e.Author);
+            builder.Property(e => e.PostTime).HasDefaultValue(DateTime.Now);
 
-            builder.HasMany(e => e.Posts).WithOne(e => e.User);
+            builder.Property(e => e.PostContent).HasMaxLength(250);
         }
     }
 }

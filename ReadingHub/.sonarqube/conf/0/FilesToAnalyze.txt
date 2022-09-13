@@ -24,5 +24,6 @@ F:\ReadingHub\ReadingHub.Persistence\Migrations\ApplicationDbContextModelSnapsho
 F:\ReadingHub\ReadingHub.Persistence\Models\Book.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Comment.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\Notification.cs
+F:\ReadingHub\ReadingHub.Persistence\Models\Post.cs
 F:\ReadingHub\ReadingHub.Persistence\Models\User.cs
 F:\ReadingHub\ReadingHub.Persistence\UserService.cs
