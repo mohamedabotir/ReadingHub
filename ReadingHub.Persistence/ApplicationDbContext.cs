@@ -4,6 +4,7 @@ using ReadingHub.Persistence.Abstract;
 using ReadingHub.Persistence.Configuration;
 using ReadingHub.Persistence.Models;
 using ReadingHub.Unit.Abstracts;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace ReadingHub.Persistence
         public DbSet<Book> Books { get ; set ; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Post> Posts { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;
@@ -57,6 +59,12 @@ namespace ReadingHub.Persistence
                 if(e.Entity is Book book && e.State == EntityState.Added)
                 {
                     book.AuthorId = _userService.GetUserId();
+                }
+
+                if (e.Entity is Post post && e.State == EntityState.Added) { 
+
+                    post.UserId = _userService.GetUserId();
+                    post.PostTime = DateTime.Now;
                 }
             });
         

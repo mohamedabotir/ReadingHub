@@ -20,11 +20,13 @@ namespace ReadingHub.Unit
             UserRepository = new UserRepository(userService,env,context,manager, map,config);
             CommentRepository = new CommentRepository(context, map,userService);
             CommunicationRepository = new CommunicationRepository(hub,userService,context,map);
+            PostRepository = new PostRepository(map,context);
         }
 
         public IBookRepository BookRepository { get ; set ; }
         public IUserRepository UserRepository { get ; set ; }
         public ICommentRepository CommentRepository { get; set; }
         public ICommunicationRepository CommunicationRepository { get ; set ; }
+        public IPostRepository PostRepository { get ; set; }
     }
 }

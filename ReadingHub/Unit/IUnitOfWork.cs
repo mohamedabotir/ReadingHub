@@ -10,5 +10,8 @@ namespace ReadingHub.Unit
         public ICommentRepository CommentRepository { get; set; }
 
         public ICommunicationRepository CommunicationRepository { get; set; }
+
+        public IPostRepository PostRepository { get; set; }
+
     }
 }
