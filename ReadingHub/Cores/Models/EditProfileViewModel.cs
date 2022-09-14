@@ -17,7 +17,7 @@ namespace ReadingHub.Cores.Models
             set;
         }
         
-        public IFormFile Photo { get; set; }
+        public IFormFile? Photo { get; set; }
 
     }
 }

@@ -16,6 +16,10 @@ namespace ReadingHub.Persistence.Abstract
         public DbSet<User> Users { get; set; }
 
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<BookComment> BookComments { get; set; }
+        public DbSet<PostComment> PostComments { get; set; }
+
         public void Complete();
     }
 }

@@ -14,13 +14,13 @@ namespace ReadingHub.Unit
     {
          
 
-        public UnitOfWork(IHostEnvironment env,IApplicationDbContext context,IMapper map,UserManager<User> manager,IConfiguration config,IUserService userService, IHubContext<RealTimeCommunicationService, IHubs> hub)
+        public UnitOfWork(ISharedService shared,IHostEnvironment env,IApplicationDbContext context,IMapper map,UserManager<User> manager,IConfiguration config,IUserService userService, IHubContext<RealTimeCommunicationService, IHubs> hub)
         {
             BookRepository = new BookRepository(userService,env,context,map);
-            UserRepository = new UserRepository(userService,env,context,manager, map,config);
-            CommentRepository = new CommentRepository(context, map,userService);
+            UserRepository = new UserRepository(shared,userService,env,context,manager, map,config);
+            CommentRepository = new CommentRepository(shared,context, map,userService);
             CommunicationRepository = new CommunicationRepository(hub,userService,context,map);
-            PostRepository = new PostRepository(map,context);
+            PostRepository = new PostRepository(userService,map,context);
         }
 
         public IBookRepository BookRepository { get ; set ; }

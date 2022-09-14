@@ -39,5 +39,16 @@ namespace ReadingHub.Controllers
         }
 
 
+        
+        [HttpGet]
+        [Route(nameof(GetBookComment))]
+        public async Task<IActionResult> GetBookComment(int bookId)
+        {
+            var commentResult =   unitOfWork.CommentRepository.GetBookComments(bookId);
+
+            return Ok(commentResult);
+        }
+
+
     }
 }

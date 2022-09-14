@@ -18,6 +18,9 @@ namespace ReadingHub.Persistence
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<BookComment> BookComments { get; set; }
+        public DbSet<PostComment> PostComments { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;
@@ -34,19 +37,22 @@ namespace ReadingHub.Persistence
 
         public   void Complete()
         {
-              this.SaveChanges();
+            Track();
+            this.SaveChanges();
         }
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            Track();
+             
+            
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            Track();
+            
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
+       
 
         private void Track() {
             this.ChangeTracker.Entries().ToList().ForEach(e =>
@@ -54,6 +60,12 @@ namespace ReadingHub.Persistence
                 if (e.Entity is Comment comment && e.State == EntityState.Added)
                 {
                     comment.UserId = _userService.GetUserId();
+                    this.SaveChanges();
+                    if (comment.CommentType == CommentType.bookComment) { 
+                    this.BookComments.Add(new BookComment { CommentId = comment.Id , BookId=comment.EntityId});
+                        this.SaveChanges();
+                    }
+                   
                 }
 
                 if(e.Entity is Book book && e.State == EntityState.Added)
@@ -66,6 +78,11 @@ namespace ReadingHub.Persistence
                     post.UserId = _userService.GetUserId();
                     post.PostTime = DateTime.Now;
                 }
+                if(e.Entity is IEditModel entity&& e.State == EntityState.Modified)
+                {
+                    entity.EditDateTime = DateTime.Now;
+                }
+                 
             });
         
         }

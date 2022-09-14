@@ -19,7 +19,8 @@ namespace ReadingHub.Cores.Repository
         private readonly IApplicationDbContext _context;
         private readonly IHostEnvironment Environment;
         private readonly IUserService _userService;
-        public UserRepository(IUserService user,IHostEnvironment env,IApplicationDbContext context,UserManager<User> userManager,IMapper mapper,IConfiguration configuration)
+        private readonly ISharedService _sharedService;
+        public UserRepository(ISharedService service,IUserService user,IHostEnvironment env,IApplicationDbContext context,UserManager<User> userManager,IMapper mapper,IConfiguration configuration)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -27,15 +28,16 @@ namespace ReadingHub.Cores.Repository
             _context = context;
             Environment = env;
             _userService = user;
+            _sharedService = service;
         }
                
         public async Task<bool> Register(UserViewModel model)
         {
-           var user = await _userManager.CreateAsync(_mapper.Map<UserViewModel,User>(model),model.Password);
+            var fileName = await SaveFileToDisk(model.Photo, model.UserName);
+            model.PhotoUrl = fileName;
+            var user = await _userManager.CreateAsync(_mapper.Map<UserViewModel,User>(model),model.Password);
             if (user.Succeeded)
             {
-                var getUser = _context.Users.First(e=>e.Email == model.Email);
-               await SaveFileToDisk(model.Photo, getUser.Id);
                 return true;
             }
             return false;
@@ -84,7 +86,7 @@ namespace ReadingHub.Cores.Repository
                     if (result.Count == 3)
                         break;
                     var author = _mapper.Map<User, ProfileViewModel>(_context.Users.First(e => e.Id == item.Key));
-                    author.PictureUrl = "profile/"+ GetAuthorPicture(author.Id);
+                    author.PictureUrl = "profile/"+ author.PhotoUrl;
                     result.Add(author);
                 }          
             
@@ -95,17 +97,9 @@ namespace ReadingHub.Cores.Repository
             return Task.FromResult(result.AsEnumerable<ProfileViewModel>());
         }
 
-        string GetAuthorPicture(string id)
-        {
-            var files = Directory.GetFiles(GetProfileContentsDirectory());
+        
 
-            var file = files.FirstOrDefault(x => x.Contains(id.ToString()));
-            if (file != null)
-                return id + "." + file.Split(".")[1];
-            
-
-            return null;
-        }
+       
 
         public Task<bool> CheckEmailAddress(string email)
         {
@@ -120,7 +114,7 @@ namespace ReadingHub.Cores.Repository
 
             var user = _context.Users.FirstOrDefault(e => e.Id == _userService.GetUserId());
             var userBuilder = new UserBuilder(user);
-
+            var fileName = "";
             if(editProfileViewModel.Address != null)
                 userBuilder.Address(editProfileViewModel.Address);
             if (editProfileViewModel.UserName != null)
@@ -128,23 +122,28 @@ namespace ReadingHub.Cores.Repository
             if(editProfileViewModel.PhoneNumber!=null)
                 userBuilder.PhoneNumber(editProfileViewModel.PhoneNumber);
 
-          var result =  _context.Users.Update(userBuilder.Build());
+            if (user.Id == _userService.GetUserId() && editProfileViewModel.Photo != null)
+            {
+
+                fileName= await UpdatePicture(editProfileViewModel.Photo, user.UserName);
+            }
+            var builderResult = userBuilder.Build();
+            builderResult.PhotoUrl = fileName;
+            var result =  _context.Users.Update(builderResult);
             _context.Complete();
 
-            if (result.Entity.Id == _userService.GetUserId() && editProfileViewModel.Photo != null) {
-
-                  await  UpdatePicture(editProfileViewModel.Photo, user.Id);               
-            }
+            
         
         }
 
-        public async Task UpdatePicture(IFormFile file, string identifier) { 
-            string path = GetProfileContentsDirectory();
+        public async Task<string> UpdatePicture(IFormFile file, string identifier) { 
+            string path = _sharedService.GetProfileContentsDirectory();
             Directory.CreateDirectory(path);
             var files = Directory.GetFiles(path);
+            var fileName = "";
             if (!files.Any())
-            { 
-             await SaveFileToDisk(file, identifier);
+            {
+                fileName= await SaveFileToDisk(file, identifier);
 
             }
             else
@@ -153,26 +152,26 @@ namespace ReadingHub.Cores.Repository
                 {
                     if (item.Contains(identifier))
                     {
-                        File.Delete(Path.Combine(GetProfileContentsDirectory(), identifier + "." + item.Split(".")[1]));
+                        File.Delete(Path.Combine(_sharedService.GetProfileContentsDirectory(), identifier + "." + item.Split(".")[1]));
                     }
-                    await SaveFileToDisk(file, identifier);
+                   fileName =await SaveFileToDisk(file, identifier);
 
                 }
+            return fileName;
         }
 
-        public async Task SaveFileToDisk(IFormFile file, string identifier)
+        public  Task<string> SaveFileToDisk(IFormFile file, string identifier)
         {
-            string path = GetProfileContentsDirectory();
+            string path = _sharedService.GetProfileContentsDirectory();
             Directory.CreateDirectory(path);
-            using (Stream fileStream = new FileStream(Path.Combine(path, identifier + $".{file.FileName.Split('.')[1]}"), FileMode.Create))
+            var fileName = identifier + $".{file.FileName.Split('.')[1]}";
+            using (Stream fileStream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
             {
-                await file.CopyToAsync(fileStream);
+                  file.CopyTo(fileStream);
             }
+            return Task.FromResult(fileName);
         }
 
-        public string GetProfileContentsDirectory()
-        {
-            return Environment.ContentRootPath + "wwwroot/profile";
-        }
+        
     }
 }

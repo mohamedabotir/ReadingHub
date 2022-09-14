@@ -18,6 +18,7 @@ namespace ReadingHub.Persistence.Configuration
             builder.Property(e => e.BookName).HasMaxLength(100);
             builder.Property(e => e.Description).HasMaxLength(300);
             builder.HasIndex(e => e.BookName).IsUnique(true);
+            builder.HasMany(e => e.Comments).WithOne(e => e.Book);
         }
     }
 }

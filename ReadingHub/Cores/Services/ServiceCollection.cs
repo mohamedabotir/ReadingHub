@@ -20,6 +20,7 @@ namespace ReadingHub.Cores.Services
             services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ISharedService, SharedService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }

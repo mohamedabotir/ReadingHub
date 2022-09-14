@@ -6,5 +6,11 @@ namespace ReadingHub.Unit.Abstracts.Repository
     {
         Task<int> Comment(CommentViewModel comment);
         Task<bool> DeleteComment(int commentId);
+
+        Task<ProfileViewModel> GetUserInformation(string id);
+
+        Task GetBookComments(int bookId);
+
+
     }
 }

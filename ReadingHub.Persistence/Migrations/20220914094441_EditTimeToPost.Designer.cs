@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReadingHub.Persistence;
 
@@ -11,9 +12,10 @@ using ReadingHub.Persistence;
 namespace ReadingHub.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220914094441_EditTimeToPost")]
+    partial class EditTimeToPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +196,7 @@ namespace ReadingHub.Persistence.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("ReadingHub.Persistence.Models.BookComment", b =>
+            modelBuilder.Entity("ReadingHub.Persistence.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,30 +207,10 @@ namespace ReadingHub.Persistence.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("BookComments");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<DateTime>("CommentDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 14, 12, 51, 48, 802, DateTimeKind.Local).AddTicks(3862));
+                        .HasDefaultValue(new DateTime(2022, 9, 14, 11, 44, 41, 725, DateTimeKind.Local).AddTicks(3577));
 
                     b.Property<DateTime>("EditDateTime")
                         .HasColumnType("datetime2");
@@ -241,6 +223,8 @@ namespace ReadingHub.Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.HasIndex("UserId");
 
@@ -291,7 +275,7 @@ namespace ReadingHub.Persistence.Migrations
                     b.Property<DateTime>("PostTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 9, 14, 12, 51, 48, 802, DateTimeKind.Local).AddTicks(4172));
+                        .HasDefaultValue(new DateTime(2022, 9, 14, 11, 44, 41, 725, DateTimeKind.Local).AddTicks(3932));
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -301,29 +285,6 @@ namespace ReadingHub.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.PostComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostComments");
                 });
 
             modelBuilder.Entity("ReadingHub.Persistence.Models.User", b =>
@@ -461,30 +422,19 @@ namespace ReadingHub.Persistence.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("ReadingHub.Persistence.Models.BookComment", b =>
+            modelBuilder.Entity("ReadingHub.Persistence.Models.Comment", b =>
                 {
                     b.HasOne("ReadingHub.Persistence.Models.Book", "Book")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReadingHub.Persistence.Models.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Comment");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.Comment", b =>
-                {
                     b.HasOne("ReadingHub.Persistence.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Book");
 
                     b.Navigation("User");
                 });
@@ -511,35 +461,6 @@ namespace ReadingHub.Persistence.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.PostComment", b =>
-                {
-                    b.HasOne("ReadingHub.Persistence.Models.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReadingHub.Persistence.Models.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.Book", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("ReadingHub.Persistence.Models.Post", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("ReadingHub.Persistence.Models.User", b =>

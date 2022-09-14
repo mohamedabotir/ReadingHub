@@ -16,6 +16,8 @@ namespace ReadingHub.Persistence.Configuration
             builder.Property(e => e.PostTime).HasDefaultValue(DateTime.Now);
 
             builder.Property(e => e.PostContent).HasMaxLength(250);
+
+            builder.HasMany(e => e.Comments).WithOne(e=>e.Post);
         }
     }
 }

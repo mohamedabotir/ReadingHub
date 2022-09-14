@@ -30,7 +30,7 @@ namespace ReadingHub.Cores.Repository
             var addNotification = _context.Notifications.Add(_mapper.Map<CommunicationViewModel,Notification>(notification));
             _context.Complete();
 
-            if (addNotification.Entity.Id > 0)
+            if (addNotification.Entity.Id < 0)
                 GuardException.CanNotCreate(true,nameof(Notification));
            
             _hub.Clients.All.BroadcastNotification(notification);

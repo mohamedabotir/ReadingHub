@@ -21,6 +21,11 @@ namespace ReadingHub.Persistence.Models
         public int PageNumbers { get; set; }
 
         public byte[] BookFile { get; set; }
+        public ICollection<BookComment> Comments { get; set; }
+        public Book()
+        {
+            Comments = new List<BookComment>();
+        }
 
     }
 }
