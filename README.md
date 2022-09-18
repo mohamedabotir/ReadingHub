@@ -28,6 +28,7 @@ login using local signin or local registeration no external loging using jwt tok
 ## Phase 2 
 - Update and Delete ,Get My Posts 
 sample picture 
-![Screenshot 2022-09-18 165052](https://user-images.githubusercontent.com/52336027/190913361-221793ff-fe65-40f7-a0e5-773eb9a117f1.png)
+![Screenshot 2022-09-18 165052](https://user-images.githubusercontent.com/52336027/190914130-fda7712f-6d02-432b-a5f4-9da46ec74a7a.png)
+
 ### 
 diagram to phase including erd ![readingHub-diagram](https://user-images.githubusercontent.com/52336027/190913385-090faec6-96a9-4510-8c4a-402d10bab562.png)
