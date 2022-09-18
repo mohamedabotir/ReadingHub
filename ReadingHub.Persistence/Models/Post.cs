@@ -1,6 +1,7 @@
 ﻿using ReadingHub.Persistence.Abstract;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace ReadingHub.Persistence.Models
         public ICollection<PostComment> Comments { set; get; }
         public Post()
         {
-            Comments = new List<PostComment>();
+            Comments = new Collection<PostComment>();
         }
     }
 }

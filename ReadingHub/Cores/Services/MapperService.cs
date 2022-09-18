@@ -28,15 +28,15 @@ namespace ReadingHub.Cores.Services
 
             CreateMap<Post, PostViewModel>().ReverseMap();
 
-            CreateMap<BookCommentViewModel,Comment >().ReverseMap()
+            CreateMap<BookAndPostCommentViewModel,Comment >().ReverseMap()
                 .ForMember(e=>e.UserName ,o=>o.MapFrom(e=>e.User.UserName))
                 .ForMember(e=>e.PhotoUrl,o=>o.MapFrom(e=>"profile/"+e.User.PhotoUrl));
 
-            
+
+            CreateMap<GetPostViewModel, Post>().ReverseMap()
+                .ForMember(e => e.UserName, o => o.MapFrom(e=>e.User.UserName))
+                .ForMember(e=>e.PhotoUrl,o=>o.MapFrom(e=>e.User.PhotoUrl));
         }
-        public Book validate(BookViewModel model)
-        {
-            return new Book();
-        }
+         
     }
 }

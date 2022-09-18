@@ -19,11 +19,11 @@ namespace ReadingHub.Controllers
         [Route("Comment")]
         public async Task<IActionResult> Comment(CommentViewModel comment) { 
         var commentResult = await unitOfWork.CommentRepository.Comment(comment);
-           await unitOfWork.CommunicationRepository.Notify(comment.BookId,NotificationType.Comment);
-
-
             if (commentResult < 0)
                 return BadRequest();
+            await unitOfWork.CommunicationRepository.Notify(comment.BookId,NotificationType.Comment);
+
+
             return Ok(commentResult);
         }
 
@@ -41,11 +41,42 @@ namespace ReadingHub.Controllers
 
         
         [HttpGet]
-        [Route(nameof(GetBookComment))]
-        public async Task<IActionResult> GetBookComment(int bookId)
+        [Route(nameof(GetBookComments))]
+        public IActionResult GetBookComments(int bookId)
         {
             var commentResult =   unitOfWork.CommentRepository.GetBookComments(bookId);
 
+            return Ok(commentResult);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route(nameof(PostComment))]
+        public async Task<IActionResult> PostComment(CommentViewModel model)
+        {
+            var commentResult =await unitOfWork.CommentRepository.PostComment(model);
+
+            return Ok(commentResult);
+        }
+
+      
+        [HttpGet]
+        [Route(nameof(GetPostComments))]
+        public  IActionResult GetPostComments(int postId)
+        {
+            var commentResult =  unitOfWork.CommentRepository.GetPostComments(postId);
+            
+            return Ok(commentResult);
+        }
+        [Authorize]
+        [HttpDelete]
+        [Route(nameof(DeletePostComments))]
+        public async Task<IActionResult> DeletePostComments(int commentId)
+        {
+            var commentResult =await unitOfWork.CommentRepository.DeletePostComment(commentId);
+            if (commentResult is false)
+                return BadRequest("Can't Remove at This Time");
+            
             return Ok(commentResult);
         }
 

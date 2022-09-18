@@ -6,6 +6,7 @@ using ReadingHub.Persistence.Abstract;
 using ReadingHub.Persistence.Models;
 using ReadingHub.Unit.Abstracts;
 using ReadingHub.Unit.Abstracts.Repository;
+using System.Collections;
 
 namespace ReadingHub.Cores.Repository
 {
@@ -26,6 +27,9 @@ namespace ReadingHub.Cores.Repository
         //Book Comment
         public Task<int> Comment(CommentViewModel comment)
         {
+            var checkBook = _context.Books.FirstOrDefault(e=>e.Id == comment.BookId);
+            if (checkBook is null)
+                return Task.FromResult(-1);
             var addResult = _context.Comments.Add(_mapper.Map<CommentViewModel,Comment>(comment));
             _context.Complete();
             if(addResult.Entity.Id<0)
@@ -55,12 +59,58 @@ namespace ReadingHub.Cores.Repository
         return Task.FromResult(result);
         }
 
-        public Task GetBookComments(int bookId) {
+        public IEnumerable<BookAndPostCommentViewModel> GetBookComments(int bookId) {
+            var check = _context.Posts.FirstOrDefault(e => e.Id == bookId);
+
+            if (check is null)
+                return Enumerable.Empty<BookAndPostCommentViewModel>();
             var comments = _context.BookComments.Where(e => e.BookId == bookId).Include(e => e.Comment).ThenInclude(e=>e.User).AsEnumerable();
-            var result= _mapper.Map<IEnumerable<Comment>, IEnumerable<BookCommentViewModel>>(comments.Select(e=>e.Comment));
+            var result= _mapper.Map<IEnumerable<Comment>, IEnumerable<BookAndPostCommentViewModel>>(comments.Select(e=>e.Comment));
          
-            return Task.FromResult(result);
+            return result;
         
+        }
+
+        public Task<int> PostComment(CommentViewModel model)
+        {
+            var checkPost = _context.Posts.FirstOrDefault(e=>e.Id == model.BookId);
+            if (checkPost is null)
+                return Task.FromResult(-1);
+            model.CommentType = CommentType.PostComment;
+            var result = _context.Comments.Add(_mapper.Map<CommentViewModel,Comment>(model));
+
+            _context.Complete();
+
+            return Task.FromResult(result.Entity.Id);
+        }
+
+
+        public IEnumerable<BookAndPostCommentViewModel> GetPostComments(int postId)
+        {
+            var check = _context.Posts.FirstOrDefault(e=>e.Id == postId);
+            if (check is null) 
+              return Enumerable.Empty<BookAndPostCommentViewModel>();
+
+            var comments = _context.PostComments.Where(e => e.Id == postId).Include(e => e.Comment).ThenInclude(e => e.User).AsEnumerable();
+            var result = _mapper.Map<IEnumerable<Comment>, IEnumerable<BookAndPostCommentViewModel>>(comments.Select(e => e.Comment));
+
+            return result;
+
+        }
+
+        public Task<bool> DeletePostComment(int postId)
+        {
+            var post = _context.Comments.FirstOrDefault(e=>e.Id==postId);
+           
+            if (post is null ||post.UserId != _userService.GetUserId())
+            {
+               
+                return Task.FromResult(false);
+            }
+            _context.Comments.Remove(post);
+            _context.Complete();
+
+            return Task.FromResult(true);
         }
     }
 }

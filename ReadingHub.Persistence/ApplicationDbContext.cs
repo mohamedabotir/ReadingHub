@@ -61,8 +61,13 @@ namespace ReadingHub.Persistence
                 {
                     comment.UserId = _userService.GetUserId();
                     this.SaveChanges();
-                    if (comment.CommentType == CommentType.bookComment) { 
-                    this.BookComments.Add(new BookComment { CommentId = comment.Id , BookId=comment.EntityId});
+                    if (comment.CommentType == CommentType.bookComment)
+                    {
+                        this.BookComments.Add(new BookComment { CommentId = comment.Id, BookId = comment.EntityId });
+                        this.SaveChanges();
+                    }
+                    else if (comment.CommentType == CommentType.PostComment) {
+                        this.PostComments.Add(new PostComment { CommentId = comment.Id, PostId = comment.EntityId });
                         this.SaveChanges();
                     }
                    

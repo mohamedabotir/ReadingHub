@@ -69,5 +69,18 @@ namespace ReadingHub.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route(nameof(GetMyProfile))]
+        [Authorize]
+        public async Task<IActionResult> GetMyProfile()
+        {
+
+           var profile= await unitOfWork.UserRepository.GetMyProfile();
+            if(profile is null)
+                return BadRequest("Can't Access Your Profile");
+
+            return Ok(profile);
+        }
+
     }
 }

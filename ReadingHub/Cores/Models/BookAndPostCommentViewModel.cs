@@ -1,6 +1,6 @@
 ﻿namespace ReadingHub.Cores.Models
 {
-    public class BookCommentViewModel
+    public class BookAndPostCommentViewModel
     {
         public int Id { get; set; }
         public string Message { get; set; }

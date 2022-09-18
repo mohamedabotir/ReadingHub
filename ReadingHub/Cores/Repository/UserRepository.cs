@@ -65,7 +65,7 @@ namespace ReadingHub.Cores.Repository
             if(type== ProfileType.user)
             {
                 result = (List<ProfileViewModel>)_mapper.Map<IEnumerable<User>, IEnumerable<ProfileViewModel>>(_context.Users.Where(e => e.Id == id).AsEnumerable());
-                Task.FromResult(result.AsEnumerable<ProfileViewModel>());
+               return Task.FromResult(result.AsEnumerable<ProfileViewModel>());
             }
            
                 var dic = new Dictionary<string, int>();
@@ -172,6 +172,16 @@ namespace ReadingHub.Cores.Repository
             return Task.FromResult(fileName);
         }
 
-        
+        public Task<ProfileViewModel> GetMyProfile()
+        {
+            var user = _context.Users.FirstOrDefault(e => e.Id == _userService.GetUserId());
+            if (user is null)
+                return null;
+            var author = _mapper.Map<User, ProfileViewModel>(user);
+            author.PictureUrl = "profile/" + author.PhotoUrl;
+
+            return Task.FromResult(author);
+
+        }
     }
 }

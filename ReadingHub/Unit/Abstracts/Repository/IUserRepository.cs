@@ -11,6 +11,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<IEnumerable<ProfileViewModel>> GetUserProfileOrUsersProfiles(ProfileType type,string id="");
         Task<bool> CheckEmailAddress(string email);
         Task EditProfile(EditProfileViewModel editProfileViewModel);
+        Task<ProfileViewModel> GetMyProfile();
     }
     public enum ProfileType { 
     user,Users

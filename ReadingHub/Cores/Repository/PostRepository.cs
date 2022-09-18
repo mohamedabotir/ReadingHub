@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ReadingHub.Cores.Models;
 using ReadingHub.Cores.Validations.Exceptions;
 using ReadingHub.Persistence.Abstract;
@@ -60,6 +61,38 @@ namespace ReadingHub.Cores.Repository
             return post;
         }
 
+        public Task<bool> UpdatePost(PostViewModel model)
+        {
+            var post = _context.Posts.FirstOrDefault(e => e.Id == model.Id);
+            if (post is null ||post.UserId != _userService.GetUserId())
+                return Task.FromResult(false);
+            post.PostContent = model.PostContent;
 
+            _context.Posts.Update(post);
+
+            _context.Complete();
+
+            return Task.FromResult(true);
+        
+        }
+
+        public Task<IEnumerable<GetPostViewModel>> GetPosts(int page=0)
+        {
+            var posts = _context.Posts.Skip(page).Take(5)
+                .Include(e=>e.User).AsEnumerable();
+
+            var result = _mapper.Map<IEnumerable<Post>, IEnumerable<GetPostViewModel>>(posts);
+
+            return Task.FromResult(result);
+        }
+
+        public Task<IEnumerable<GetPostViewModel>> GetMyPosts(int page = 0)
+        {
+            var posts = _context.Posts.Where(e => e.UserId == _userService.GetUserId()).Take(5).AsEnumerable();
+            var result = _mapper.Map<IEnumerable<Post>, IEnumerable<GetPostViewModel>>(posts);
+
+            return Task.FromResult(result);
+
+        }
     }
 }
