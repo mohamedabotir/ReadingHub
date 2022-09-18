@@ -54,5 +54,19 @@ namespace ReadingHub.Controllers
                 return BadRequest("No Posts Available");
             return Ok(post);
         }
+
+
+        [Authorize]
+        [Route(nameof(DeletePost))]
+        [HttpDelete]
+        public async Task<IActionResult> DeletePost(int postId)
+        {
+            var post = await unitOfWork.PostRepository.DeletePost(postId);
+            if (post is false)
+                return BadRequest("can't Delete at This time");
+            return Ok(post);
+        }
+
+
     }
 }
