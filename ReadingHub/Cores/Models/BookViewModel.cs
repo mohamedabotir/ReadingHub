@@ -12,5 +12,6 @@ namespace ReadingHub.Cores.Models
         public string BookMimeType { get; set; }
         public IFormFile BookFile { get; set; }
         public IFormFile Photo { get; set; }
+        public int PageNumbers { get; set; }
     }
 }

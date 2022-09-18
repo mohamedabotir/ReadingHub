@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReadingHub.Cores.Services;
@@ -28,12 +29,19 @@ builder.Services.AddAuthenticationService(builder.Configuration);
 builder.Services.AddSignalR();
 
 
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("_myAllowSpecificOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200")
+            builder.WithOrigins("https://192.168.1.3:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .SetIsOriginAllowed((x) => true)

@@ -18,7 +18,7 @@ namespace ReadingHub.Controllers
         
         
         [Authorize]
-        [HttpPost]
+        [HttpPost,DisableRequestSizeLimit]
         [Route("PublishBook")]
        public async Task<IActionResult> PublishBook([FromForm]BookViewModel model) {
               
