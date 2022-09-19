@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Unit;
@@ -79,6 +78,16 @@ namespace ReadingHub.Controllers
         public async Task<IActionResult> DeleteBook(int bookId)
         {
             var book = await unitOfWork.BookRepository.DeleteBook(bookId);
+            return Ok(book);
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetMyBooks")]
+        public async Task<IActionResult> GetMyBooks()
+        {
+            var book = await unitOfWork.BookRepository.GetMyBooks();
             return Ok(book);
 
         }

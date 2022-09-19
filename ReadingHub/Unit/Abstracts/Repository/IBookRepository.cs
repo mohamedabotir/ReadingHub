@@ -10,6 +10,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<GetBookViewModel> GetBook(int bookId);
         Book GetBookFile(int bookId);
 
+        Task<IEnumerable<GetMyBookWithFileViewModel>> GetMyBooks();
         Task<bool>UpdateBook(BookViewModel model);
         Task<bool> DeleteBook(int bookId);
     }

@@ -142,5 +142,21 @@ namespace ReadingHub.Cores.Repository
 
             return Task.FromResult(true);
         }
+
+        public Task<IEnumerable<GetMyBookWithFileViewModel>> GetMyBooks()
+        {
+            var myBooks = _context.Books.Where(e => e.AuthorId == _userService.GetUserId()).AsEnumerable();
+
+            var books = _mapper.Map<IEnumerable<Book>, IEnumerable<GetMyBookWithFileViewModel>>(myBooks);
+
+            foreach (var book in books)
+            {
+                book.PhotoUrl = "booksImgs/"+GetBookName((int)book.Id);
+            }
+
+            return Task.FromResult(books);       
+        }
+       
+
     }
 }
