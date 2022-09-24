@@ -44,10 +44,12 @@ namespace ReadingHub.Cores.Repository
 
             return createBook.Entity.Id;
         }
-        public Task<bool> UpdateBook(BookViewModel model)
+        public async Task<bool> UpdateBook(BookViewModel model)
         {
             
             var book = _context.Books.FirstOrDefault(x => x.Id == model.Id);
+            if (book.AuthorId != _userService.GetUserId())
+                return false;
             GuardException.NotNull(book, nameof(book));
             var updatedData = _mapper.Map<BookViewModel, Book>(model);
 
@@ -56,15 +58,20 @@ namespace ReadingHub.Cores.Repository
                 
                 updatedData.BookFile = book.BookFile;
                 updatedData.BookMimeType = book.BookMimeType;
-            }
-            else
+            } else
             {
              FileConvert(ref updatedData, model.BookFile);
             }
+            if(model.Photo != null)
+            {
+              await DeleteBookPhotoFile(book.Id);
+              await  SaveFileToDisk(model.Photo, book.Id);
+            }
+           
 
             _context.Books.Update(updatedData);
             _context.Complete(); 
-            return Task.FromResult(true);
+            return true;
         }
         public  async Task SaveFileToDisk(IFormFile file,int identifier) {
             string path = GetBookContentsDirectory();
@@ -126,23 +133,32 @@ namespace ReadingHub.Cores.Repository
 
             return null;
         }
-        public Task<bool> DeleteBook(int bookId)
+        public async Task<bool> DeleteBook(int bookId)
         {
  
             var book = _context.Books.FirstOrDefault(e => e.Id == bookId);
             GuardException.NotFound(book, nameof(Book));
 
             if(book.AuthorId != _userService.GetUserId())
-                return Task.FromResult(false);
+                return false;
 
             _context.Books.Remove(book);
             _context.Complete();
+            await DeleteBookPhotoFile(book.Id);
 
-            File.Delete(Path.Combine(GetBookContentsDirectory(), GetBookName(book.Id)));
-
-            return Task.FromResult(true);
+            return true;
         }
 
+        public async Task DeleteBookPhotoFile(int bookId) {
+          await  Task.Run(() =>
+            {
+                var filePath = Path.Combine(GetBookContentsDirectory(), GetBookName(bookId));
+                if(File.Exists(filePath))
+                File.Delete(filePath);
+
+            }); 
+
+        }
         public Task<IEnumerable<GetMyBookWithFileViewModel>> GetMyBooks()
         {
             var myBooks = _context.Books.Where(e => e.AuthorId == _userService.GetUserId()).AsEnumerable();
