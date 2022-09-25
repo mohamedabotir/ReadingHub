@@ -48,7 +48,8 @@ namespace ReadingHub.Cores.Repository
         {
             
             var book = _context.Books.FirstOrDefault(x => x.Id == model.Id);
-            if (book.AuthorId != _userService.GetUserId())
+            var userId = _userService.GetUserId();
+            if (book.AuthorId != userId)
                 return false;
             GuardException.NotNull(book, nameof(book));
             var updatedData = _mapper.Map<BookViewModel, Book>(model);

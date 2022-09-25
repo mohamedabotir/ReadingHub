@@ -73,7 +73,7 @@ namespace ReadingHub.Persistence
                    
                 }
 
-                if(e.Entity is Book book && e.State == EntityState.Added)
+                if(e.Entity is Book book && (e.State == EntityState.Added || e.State == EntityState.Modified))
                 {
                     book.AuthorId = _userService.GetUserId();
                 }

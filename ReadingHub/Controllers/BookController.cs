@@ -57,6 +57,7 @@ namespace ReadingHub.Controllers
 
         [HttpPut]
         [Route("UpdateBook")]
+        [Authorize]
         public async Task<IActionResult> UpdateBook([FromForm] BookViewModel book) {
             var result =await unitOfWork.BookRepository.UpdateBook(book);
         
