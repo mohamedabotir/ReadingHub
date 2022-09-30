@@ -21,6 +21,8 @@ namespace ReadingHub.Persistence
 
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<Reading> Readings { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;
@@ -32,10 +34,12 @@ namespace ReadingHub.Persistence
             builder.ApplyConfiguration(new BookConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
             builder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new ReadingConfiguration());
+
             base.OnModelCreating(builder);
         }
 
-        public   void Complete()
+        public  void Complete()
         {
             Track();
             this.SaveChanges();
@@ -64,12 +68,10 @@ namespace ReadingHub.Persistence
                     if (comment.CommentType == CommentType.bookComment)
                     {
                         this.BookComments.Add(new BookComment { CommentId = comment.Id, BookId = comment.EntityId });
-                        this.SaveChanges();
-                    }
+                     }
                     else if (comment.CommentType == CommentType.PostComment) {
                         this.PostComments.Add(new PostComment { CommentId = comment.Id, PostId = comment.EntityId });
-                        this.SaveChanges();
-                    }
+                     }
                    
                 }
 
