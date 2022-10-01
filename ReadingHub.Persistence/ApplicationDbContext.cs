@@ -93,7 +93,7 @@ namespace ReadingHub.Persistence
                     entity.EditDateTime = DateTime.Now;
                 }
 
-                if (e.Entity is Reading reading && e.State == EntityState.Added) {
+                if ((e.Entity is Reading reading) && (e.State == EntityState.Modified || (e.State == EntityState.Added))) {
                     reading.UserId = _userService.GetUserId();
                     this.SaveChanges();
 

@@ -15,5 +15,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<bool> DeleteBook(int bookId);
 
         Task<bool> MakeBookToRead(BookToReadOrReadViewModel model);
+        Task<bool> MakeBookRead(BookToReadOrReadViewModel model);
+
     }
 }

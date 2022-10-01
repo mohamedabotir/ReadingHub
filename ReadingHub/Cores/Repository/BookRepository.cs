@@ -176,19 +176,47 @@ namespace ReadingHub.Cores.Repository
 
         public Task<bool> MakeBookToRead(BookToReadOrReadViewModel model)
         {
-            var bookCheck = _context.Books.FirstOrDefault(e => e.Id == model.BookId);
-            if (bookCheck is null)
+            if (CheckReadBook(model) is  false)
                 return Task.FromResult(false);
-            var readingCheck = _context.Readings
-                .FirstOrDefault(e => e.BookId == model.BookId && e.UserId == _userService.GetUserId());
-            if (readingCheck is not null)
-                return Task.FromResult(false);
-            model.Status = ReadingStatus.toRead; 
+            model.Status = ReadingStatus.toRead;
+            var reading = _context.Readings.FirstOrDefault(e => e.BookId == model.BookId && e.UserId == _userService.GetUserId());
             var book = _mapper.Map<BookToReadOrReadViewModel, Reading>(model);
-            var result= _context.Readings.Add(book);
+            if (reading is not null)
+            {
+                reading.Status = model.Status;
+                book = reading;
+            }
+            var result= _context.Readings.Update(book);
             _context.Complete();
             if(result.Entity.Id<0)
                return Task.FromResult(false);
+            return Task.FromResult(true);
+        }
+        private bool CheckReadBook(BookToReadOrReadViewModel model) {
+            var bookCheck = _context.Books.FirstOrDefault(e => e.Id == model.BookId);
+           if (bookCheck is null)
+                return false;
+            return true;
+
+
+        }
+
+        public Task<bool> MakeBookRead(BookToReadOrReadViewModel model)
+        {
+
+            if (CheckReadBook(model) is false)
+                return Task.FromResult(false);
+            model.Status = ReadingStatus.read;
+            var reading = _context.Readings.FirstOrDefault(e => e.BookId == model.BookId && e.UserId == _userService.GetUserId());
+            var book = _mapper.Map<BookToReadOrReadViewModel, Reading>(model);
+            if (reading is not null) {
+                reading.Status = model.Status;
+                book = reading;
+            }
+            var result = _context.Readings.Update(book);
+            _context.Complete();
+            if (result.Entity.Id < 0)
+                return Task.FromResult(false);
             return Task.FromResult(true);
         }
     }
