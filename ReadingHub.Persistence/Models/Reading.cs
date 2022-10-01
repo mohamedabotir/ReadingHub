@@ -1,4 +1,6 @@
-﻿ 
+﻿
+
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReadingHub.Persistence.Models
 {
@@ -10,7 +12,11 @@ namespace ReadingHub.Persistence.Models
         public User User { get; set; }
         public int BookId { get; set; }
         public Book Book { get; set; }
+        [NotMapped]
         public int BookPages { get; set; }
+        [NotMapped]
+        public string Notes { set; get; }
+
     }
    public enum ReadingStatus {
         currentReading,

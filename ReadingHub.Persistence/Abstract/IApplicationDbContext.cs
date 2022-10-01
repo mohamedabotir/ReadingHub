@@ -20,6 +20,7 @@ namespace ReadingHub.Persistence.Abstract
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<Reading> Readings { get; set; }
+        public DbSet<ReadingNotes> ReadingNotes { get; set; }
 
         public void Complete();
     }

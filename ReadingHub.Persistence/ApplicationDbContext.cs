@@ -22,6 +22,8 @@ namespace ReadingHub.Persistence
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<Reading> Readings { get; set; }
+        public DbSet<ReadingNotes> ReadingNotes { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
@@ -35,6 +37,7 @@ namespace ReadingHub.Persistence
             builder.ApplyConfiguration(new CommentConfiguration());
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new ReadingConfiguration());
+            builder.ApplyConfiguration(new ReadingNotesConfiguration());
 
             base.OnModelCreating(builder);
         }
@@ -89,7 +92,19 @@ namespace ReadingHub.Persistence
                 {
                     entity.EditDateTime = DateTime.Now;
                 }
-                 
+
+                if (e.Entity is Reading reading && e.State == EntityState.Added) {
+                    reading.UserId = _userService.GetUserId();
+                    this.SaveChanges();
+
+                    if (reading.Status is ReadingStatus.currentReading) {
+                        ReadingNotes.Add(new ReadingNotes() {BookPages = reading.BookPages
+                            ,ReadingId = reading.Id,Notes = reading.Notes
+                            ,DateTime = DateTime.Now});
+                    }
+                }
+
+                
             });
         
         }
