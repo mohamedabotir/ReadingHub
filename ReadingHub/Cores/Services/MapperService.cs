@@ -37,8 +37,10 @@ namespace ReadingHub.Cores.Services
                 .ForMember(e => e.UserName, o => o.MapFrom(e=>e.User.UserName))
                 .ForMember(e=>e.PhotoUrl,o=>o.MapFrom(e=>e.User.PhotoUrl));
 
-            CreateMap<GetMyBookWithFileViewModel,Book >().ReverseMap()
-                ;
+            CreateMap<GetMyBookWithFileViewModel,Book >().ReverseMap();
+
+            CreateMap<BookToReadOrReadViewModel, Reading>().ReverseMap();
+                
         }
          
     }

@@ -173,7 +173,23 @@ namespace ReadingHub.Cores.Repository
 
             return Task.FromResult(books);       
         }
-       
 
+        public Task<bool> MakeBookToRead(BookToReadOrReadViewModel model)
+        {
+            var bookCheck = _context.Books.FirstOrDefault(e => e.Id == model.BookId);
+            if (bookCheck is null)
+                return Task.FromResult(false);
+            var readingCheck = _context.Readings
+                .FirstOrDefault(e => e.BookId == model.BookId && e.UserId == _userService.GetUserId());
+            if (readingCheck is not null)
+                return Task.FromResult(false);
+            model.Status = ReadingStatus.toRead; 
+            var book = _mapper.Map<BookToReadOrReadViewModel, Reading>(model);
+            var result= _context.Readings.Add(book);
+            _context.Complete();
+            if(result.Entity.Id<0)
+               return Task.FromResult(false);
+            return Task.FromResult(true);
+        }
     }
 }

@@ -93,6 +93,18 @@ namespace ReadingHub.Controllers
 
         }
 
+        [Authorize]
+        [HttpPost]
+        [Route("MarkAsWantToRead")]
+        public async Task<IActionResult> MarkAsWantToRead(BookToReadOrReadViewModel model)
+        {
+            var book = await unitOfWork.BookRepository.MakeBookToRead(model);
+            if (!book)
+                return BadRequest(book);
+            return Ok(book);
+
+        }
+
 
     }
 }
