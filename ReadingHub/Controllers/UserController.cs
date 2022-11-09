@@ -19,7 +19,7 @@ namespace ReadingHub.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register(UserViewModel model)
+        public async Task<IActionResult> Register([FromForm]UserViewModel model)
         {
             var result = await unitOfWork.UserRepository.Register(model);
 

@@ -21,6 +21,7 @@ namespace ReadingHub.Persistence
 
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<MyBooks> MyBooks { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;
