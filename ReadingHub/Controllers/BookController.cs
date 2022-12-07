@@ -30,10 +30,10 @@ namespace ReadingHub.Controllers
 
         [HttpGet]
         [Route("GetAllBooks")]
-        public   async Task< IActionResult> GetAllBooks()
+        public   async Task< IActionResult> GetAllBooks(int pageId=0)
         {
 
-            var bookResult = await  unitOfWork.BookRepository.GetBooks();
+            var bookResult = await  unitOfWork.BookRepository.GetBooks(pageId);
             if (!bookResult.Any())
                 return BadRequest(bookResult);
             return Ok(bookResult);
@@ -91,6 +91,13 @@ namespace ReadingHub.Controllers
             var book = await unitOfWork.BookRepository.GetMyBooks();
             return Ok(book);
 
+        }
+
+        [HttpGet]
+        [Route("GetBookCount")]
+        public async Task<IActionResult> GetBookCount() {
+
+            return Ok(await unitOfWork.BookRepository.GetCountBook());
         }
 
 

@@ -98,9 +98,10 @@ namespace ReadingHub.Cores.Repository
 
         }
 
-        public Task<IEnumerable<GetBooksViewModel>> GetBooks()
+        public Task<IEnumerable<GetBooksViewModel>> GetBooks(int pageId=0)
         {
-            var books = _mapper.Map<IEnumerable<Book>, IEnumerable<GetBooksViewModel>>(_context.Books.AsQueryable());
+            var books = _mapper.Map<IEnumerable<Book>, IEnumerable<GetBooksViewModel>>(_context.Books.Skip(pageId*10).Take(10)
+                .AsQueryable());
 
             foreach (var book in books)
             {
@@ -176,7 +177,11 @@ namespace ReadingHub.Cores.Repository
 
             return Task.FromResult(books);       
         }
-       
+       public Task<int> GetCountBook()
+        {
+            var myBooks = _context.Books.Count();
+            return Task.FromResult(myBooks);
+        }
 
     }
 }
