@@ -94,16 +94,19 @@ namespace ReadingHub.Cores.Repository
             book.BookMimeType = file.ContentType;
 
             book.BookFile = dataStream.ToArray();
-            
+            dataStream.Dispose();
 
         }
 
         public Task<IEnumerable<GetBooksViewModel>> GetBooks()
         {
-            var books = _context.Books.AsQueryable();
+            var books = _mapper.Map<IEnumerable<Book>, IEnumerable<GetBooksViewModel>>(_context.Books.AsQueryable());
 
-            
-            return Task.FromResult(_mapper.Map<IEnumerable<Book>,IEnumerable<GetBooksViewModel>>(books));
+            foreach (var book in books)
+            {
+                book.Photo = "booksImgs/" + GetBookName((int)book.Id);
+            }
+            return Task.FromResult(books);
 
         }
         public Book GetBookFile(int bookId)
