@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using ReadingHub.Cores.Repository;
 using ReadingHub.Cores.Services;
 using ReadingHub.Persistence.Abstract;

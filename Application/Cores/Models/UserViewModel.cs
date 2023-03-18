@@ -1,4 +1,6 @@
-﻿namespace ReadingHub.Cores.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ReadingHub.Cores.Models
 {
     public class UserViewModel
     {

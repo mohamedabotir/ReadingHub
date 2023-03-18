@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Unit;
 
 namespace ReadingHub.Controllers
 {
-    
+
     public class PostController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;

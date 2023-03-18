@@ -41,7 +41,8 @@ namespace ReadingHub.Cores.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
+                new Claim(JwtRegisteredClaimNames.Iat,
+                DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
 
                     new Claim("userId", userId),
                     new Claim("Name",userName),
@@ -49,7 +50,8 @@ namespace ReadingHub.Cores.Services
                      
                 }),
                 Expires = DateTime.Now.AddDays(3),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
 
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ReadingHub.Persistence;
@@ -14,6 +17,27 @@ namespace ReadingHub.Cores.Services
 {
     public static class ServiceCollection
     {
+         
+        public static IServiceCollection AddApplication(this IServiceCollection services,IConfiguration configuration) {
+
+
+            services.AddDbContext<ApplicationDbContext>(e =>
+            {
+                e.UseSqlServer(configuration["ConnectionStrings"]).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            }).AddIdentity<User, IdentityRole>()
+.AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+            services.PlugDIService  ();
+            services.AddSwaggerService();
+            services.AddAuthenticationService(configuration);
+            services.AddControllers(op =>
+            {
+                op.Filters.Add<ExceptionResponseFilter>();
+            });
+
+            return services;
+        }
         public static IServiceCollection PlugDIService(this IServiceCollection services) {
 
             services.AddTransient<ApplicationDbContext>();
@@ -22,11 +46,14 @@ namespace ReadingHub.Cores.Services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ISharedService, SharedService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+             
             return services;
         }
         public static IServiceCollection AddSwaggerService(this IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
+            
             {
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using ReadingHub.Cores.Models;
 using ReadingHub.Cores.Services;
 using ReadingHub.Cores.Validations.Exceptions;
@@ -7,7 +10,6 @@ using ReadingHub.Persistence.Abstract;
 using ReadingHub.Persistence.Models;
 using ReadingHub.Unit.Abstracts;
 using ReadingHub.Unit.Abstracts.Repository;
-using System.Collections;
 
 namespace ReadingHub.Cores.Repository
 {

@@ -1,33 +1,21 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReadingHub.Cores.Services;
-using ReadingHub.Persistence;
 using ReadingHub.Persistence.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ApplicationDbContext>(e =>
-{
-    e.UseSqlServer(builder.Configuration["ConnectionStrings"]).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-}).AddIdentity<User,IdentityRole>()
-.AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
 
 
-builder.Services.AddSwaggerService();
-
-builder.Services.PlugDIService();
-
-builder.Services.AddControllers();
-
+builder.Services.AddApplication(builder.Configuration);
+ 
+ 
 builder.Services.AddAntiforgery();
 
-builder.Services.AddAuthenticationService(builder.Configuration);
-
+ 
 builder.Services.AddSignalR();
-
+                                                                                
 
 builder.Services.Configure<FormOptions>(o =>
 {
@@ -51,6 +39,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseSwaggerService();
 app.UseStaticFiles();
 
 app.UseSwaggerService();

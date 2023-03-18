@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using ReadingHub.Persistence.Models;
 
 namespace ReadingHub.Cores.Models

@@ -1,8 +1,12 @@
-﻿namespace ReadingHub.Cores.Services
+﻿using Microsoft.AspNetCore.Builder;
+
+namespace ReadingHub.Cores.Services
 {
     public static  class ApplicationBuilder
     {
         public static IApplicationBuilder UseSwaggerService(this IApplicationBuilder builder) {
+
+            var assembly = typeof(ApplicationBuilder).Assembly;
             builder.UseSwagger();
             builder.UseSwaggerUI(options =>
             {

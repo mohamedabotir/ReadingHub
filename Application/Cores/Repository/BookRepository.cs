@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using ReadingHub.Cores.Models;
 using ReadingHub.Cores.Validations.Exceptions;
 using ReadingHub.Persistence.Abstract;
@@ -7,7 +8,7 @@ using ReadingHub.Persistence.Models;
 using ReadingHub.Unit.Abstracts;
 using ReadingHub.Unit.Abstracts.Repository;
 
- 
+
 namespace ReadingHub.Cores.Repository
 {
     public class BookRepository : IBookRepository

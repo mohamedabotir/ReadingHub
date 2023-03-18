@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingHub", "ReadingHub\ReadingHub.csproj", "{9B8302A4-47CE-43E1-80E2-79CF3AD8E90A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadingHub", "ReadingHub\ReadingHub.csproj", "{9B8302A4-47CE-43E1-80E2-79CF3AD8E90A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadingHub.Persistence", "ReadingHub.Persistence\ReadingHub.Persistence.csproj", "{EBB89FFD-A44F-47CF-8DF0-EA9473AE89DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "ReadingHub.Persistence\Domain.csproj", "{EBB89FFD-A44F-47CF-8DF0-EA9473AE89DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{52FEB9C5-173A-4E13-B1F9-98A416C16830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EBB89FFD-A44F-47CF-8DF0-EA9473AE89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBB89FFD-A44F-47CF-8DF0-EA9473AE89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBB89FFD-A44F-47CF-8DF0-EA9473AE89DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52FEB9C5-173A-4E13-B1F9-98A416C16830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52FEB9C5-173A-4E13-B1F9-98A416C16830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52FEB9C5-173A-4E13-B1F9-98A416C16830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52FEB9C5-173A-4E13-B1F9-98A416C16830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

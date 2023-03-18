@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Unit;
-using System.Linq;
 
 namespace ReadingHub.Controllers
 {
