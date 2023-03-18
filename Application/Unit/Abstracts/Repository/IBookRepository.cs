@@ -1,4 +1,5 @@
-﻿using ReadingHub.Cores.Models;
+﻿using Domain.Models;
+using ReadingHub.Cores.Models;
 using ReadingHub.Persistence.Models;
 
 namespace ReadingHub.Unit.Abstracts.Repository
@@ -15,5 +16,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<bool> DeleteBook(int bookId);
 
         Task<int> GetCountBook();
+
+        Task<IEnumerable<BookStatus>> GetBooksStatus();
     }
 }

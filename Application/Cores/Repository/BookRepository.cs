@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using ReadingHub.Cores.Models;
@@ -26,7 +27,7 @@ namespace ReadingHub.Cores.Repository
             _userService = userService;
         }
        
-
+        
         public async Task<int> PublishBook(BookViewModel model)
         {
 
@@ -184,5 +185,11 @@ namespace ReadingHub.Cores.Repository
             return Task.FromResult(myBooks);
         }
 
+        public Task<IEnumerable<BookStatus>> GetBooksStatus()
+        {
+            var allBooksStatus = _context.BookStatus.Select(e => e);
+
+            return Task.FromResult(allBooksStatus.AsEnumerable());
+        }
     }
 }

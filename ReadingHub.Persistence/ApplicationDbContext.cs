@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Configuration;
+using Domain.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReadingHub.Persistence.Abstract;
@@ -36,6 +37,7 @@ namespace ReadingHub.Persistence
             builder.ApplyConfiguration(new BookConfiguration());
             builder.ApplyConfiguration(new CommentConfiguration());
             builder.ApplyConfiguration(new PostConfiguration());
+            builder.ApplyConfiguration(new BookStatusConfiguration());
             base.OnModelCreating(builder);
         }
 

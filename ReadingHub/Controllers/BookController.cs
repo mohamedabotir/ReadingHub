@@ -101,5 +101,12 @@ namespace ReadingHub.Controllers
         }
 
 
+        [HttpGet]
+        [Route(nameof(GetAllBooksStatus))]
+        public async Task<IActionResult> GetAllBooksStatus() {
+            return Ok(await unitOfWork.BookRepository.GetBooksStatus());
+        }
+
+
     }
 }
