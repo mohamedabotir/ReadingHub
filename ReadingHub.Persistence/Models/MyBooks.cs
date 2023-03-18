@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,7 @@ namespace ReadingHub.Persistence.Models
         public User User { get; set; }
         public string UserId { get; set; }
         public BookStatus BookStatus { get; set; }
+        public int BookStatusId { get; set; }
     }
-    public enum BookStatus
-    {
-        reading,read,toread
-    }
+     
 }

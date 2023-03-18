@@ -19,7 +19,7 @@ namespace ReadingHub.Cores.Services
                 return id + "." + file.Split(".")[1];
 
 
-            return null;
+            return string.Empty;
         }
 
         public string GetProfileContentsDirectory()

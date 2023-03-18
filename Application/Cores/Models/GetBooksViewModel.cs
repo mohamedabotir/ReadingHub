@@ -3,7 +3,7 @@
     public class GetBooksViewModel
     {
          
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string AuthorId { get; set; }
 
         public string Description { get; set; }

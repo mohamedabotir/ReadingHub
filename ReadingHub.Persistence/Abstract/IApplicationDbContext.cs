@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using ReadingHub.Persistence.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace ReadingHub.Persistence.Abstract
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<MyBooks> MyBooks { get; set; }
+        public DbSet<BookStatus> BookStatus { get; set; }
         public void Complete();
     }
 }

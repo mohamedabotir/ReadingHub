@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReadingHub.Persistence.Abstract;
 using ReadingHub.Persistence.Configuration;
@@ -22,6 +23,8 @@ namespace ReadingHub.Persistence
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<MyBooks> MyBooks { get; set; }
+        public DbSet<BookStatus> BookStatus { get ; set ; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
         {
             _userService = userService;

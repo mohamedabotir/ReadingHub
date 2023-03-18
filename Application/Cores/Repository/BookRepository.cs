@@ -106,7 +106,7 @@ namespace ReadingHub.Cores.Repository
 
             foreach (var book in books)
             {
-                book.Photo = "booksImgs/" + GetBookName((int)book.Id);
+                book.Photo = "booksImgs/" + GetBookName(book.Id);
             }
             return Task.FromResult(books);
 
