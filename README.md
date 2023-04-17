@@ -5,7 +5,7 @@ ReadingHub
 - event reading with author via live stream
 - share posts 
 - notification system  
-#project architecture 
+# project architecture 
 ![ddd](https://github.com/mohamedabotir/ReadingHub/blob/master/Application/architecture%20utils/project%20architecture.jpg)
 
 
