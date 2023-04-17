@@ -5,6 +5,9 @@ ReadingHub
 - event reading with author via live stream
 - share posts 
 - notification system  
+#project architecture 
+![ddd](https://github.com/mohamedabotir/ReadingHub/blob/master/Application/architecture%20utils/project%20architecture.jpg=true)
+
 
 ## ShareBooks 
  auhtor  can share book and place it's price and book information and other users can buy entire book or specific pages of book.
