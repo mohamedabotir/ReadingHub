@@ -6,7 +6,7 @@ ReadingHub
 - share posts 
 - notification system  
 #project architecture 
-![ddd](https://github.com/mohamedabotir/ReadingHub/blob/master/Application/architecture%20utils/project%20architecture.jpg=true)
+![ddd](https://github.com/mohamedabotir/ReadingHub/blob/master/Application/architecture%20utils/project%20architecture.jpg)
 
 
 ## ShareBooks 
