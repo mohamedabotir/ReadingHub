@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace ReadingHub.Persistence
 {
-    public class ApplicationDbContext :IdentityDbContext<User> ,IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>, IApplicationDbContext
     {
         private readonly IUserService _userService;
-        public DbSet<Book> Books { get ; set ; }
+        public DbSet<Book> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -24,9 +24,9 @@ namespace ReadingHub.Persistence
         public DbSet<BookComment> BookComments { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<MyBooks> MyBooks { get; set; }
-        public DbSet<BookStatus> BookStatus { get ; set ; }
+        public DbSet<BookStatus> BookStatus { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IUserService userService):base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IUserService userService) : base(options)
         {
             _userService = userService;
         }
@@ -38,29 +38,31 @@ namespace ReadingHub.Persistence
             builder.ApplyConfiguration(new CommentConfiguration());
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new BookStatusConfiguration());
+            builder.ApplyConfiguration(new MyBooksConfiguration());
             base.OnModelCreating(builder);
         }
 
-        public   void Complete()
+        public void Complete()
         {
             Track();
             this.SaveChanges();
         }
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-             
-            
+
+
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            
+
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
-       
 
-        private void Track() {
+
+        private void Track()
+        {
             this.ChangeTracker.Entries().ToList().ForEach(e =>
             {
                 if (e.Entity is Comment comment && e.State == EntityState.Added)
@@ -72,30 +74,32 @@ namespace ReadingHub.Persistence
                         this.BookComments.Add(new BookComment { CommentId = comment.Id, BookId = comment.EntityId });
                         this.SaveChanges();
                     }
-                    else if (comment.CommentType == CommentType.PostComment) {
+                    else if (comment.CommentType == CommentType.PostComment)
+                    {
                         this.PostComments.Add(new PostComment { CommentId = comment.Id, PostId = comment.EntityId });
                         this.SaveChanges();
                     }
-                   
+
                 }
 
-                if(e.Entity is Book book && (e.State == EntityState.Added || e.State == EntityState.Modified))
+                if (e.Entity is Book book && (e.State == EntityState.Added || e.State == EntityState.Modified))
                 {
                     book.AuthorId = _userService.GetUserId();
                 }
 
-                if (e.Entity is Post post && e.State == EntityState.Added) { 
+                if (e.Entity is Post post && e.State == EntityState.Added)
+                {
 
                     post.UserId = _userService.GetUserId();
                     post.PostTime = DateTime.Now;
                 }
-                if(e.Entity is IEditModel entity&& e.State == EntityState.Modified)
+                if (e.Entity is IEditModel entity && e.State == EntityState.Modified)
                 {
                     entity.EditDateTime = DateTime.Now;
                 }
-                 
+
             });
-        
+
         }
 
     }

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Application.Cores.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReadingHub.Cores.Models;
 using ReadingHub.Unit;
 
 namespace ReadingHub.Controllers
 {
-    
+
     public class BookController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -14,15 +15,16 @@ namespace ReadingHub.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
-        
-        
+
+
         [Authorize]
-        [HttpPost,DisableRequestSizeLimit]
+        [HttpPost, DisableRequestSizeLimit]
         [Route("PublishBook")]
-       public async Task<IActionResult> PublishBook([FromForm]BookViewModel model) {
-              
-             var bookResult = await unitOfWork.BookRepository.PublishBook(model);
-              if(bookResult <0)
+        public async Task<IActionResult> PublishBook([FromForm] BookViewModel model)
+        {
+
+            var bookResult = await unitOfWork.BookRepository.PublishBook(model);
+            if (bookResult < 0)
                 return BadRequest(bookResult);
             return Ok(bookResult);
         }
@@ -30,19 +32,19 @@ namespace ReadingHub.Controllers
 
         [HttpGet]
         [Route("GetAllBooks")]
-        public   async Task< IActionResult> GetAllBooks(int pageId=0)
+        public async Task<IActionResult> GetAllBooks(int pageId = 0)
         {
 
-            var bookResult = await  unitOfWork.BookRepository.GetBooks(pageId);
+            var bookResult = await unitOfWork.BookRepository.GetBooks(pageId);
             if (!bookResult.Any())
                 return BadRequest(bookResult);
             return Ok(bookResult);
         }
         [HttpGet]
         [Route("GetBookFile")]
-        public   FileContentResult GetBookFile(int bookId)
+        public FileContentResult GetBookFile(int bookId)
         {
-            var book =   unitOfWork.BookRepository.GetBookFile(bookId);
+            var book = unitOfWork.BookRepository.GetBookFile(bookId);
             if (book != null)
             {
                 if (book.BookFile.Length == 0)
@@ -58,20 +60,22 @@ namespace ReadingHub.Controllers
         [HttpPut]
         [Route("UpdateBook")]
         [Authorize]
-        public async Task<IActionResult> UpdateBook([FromForm] BookViewModel book) {
-            var result =await unitOfWork.BookRepository.UpdateBook(book);
-        
-             if(result is false)
+        public async Task<IActionResult> UpdateBook([FromForm] BookViewModel book)
+        {
+            var result = await unitOfWork.BookRepository.UpdateBook(book);
+
+            if (result is false)
                 return BadRequest(result);
-             return Ok(result);
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("GetBook")]
-        public async Task<IActionResult> GetBook(int bookId) {
+        public async Task<IActionResult> GetBook(int bookId)
+        {
             var book = await unitOfWork.BookRepository.GetBook(bookId);
             return Ok(book);
-        
+
         }
 
         [HttpGet]
@@ -95,7 +99,8 @@ namespace ReadingHub.Controllers
 
         [HttpGet]
         [Route("GetBookCount")]
-        public async Task<IActionResult> GetBookCount() {
+        public async Task<IActionResult> GetBookCount()
+        {
 
             return Ok(await unitOfWork.BookRepository.GetCountBook());
         }
@@ -103,8 +108,15 @@ namespace ReadingHub.Controllers
 
         [HttpGet]
         [Route(nameof(GetAllBooksStatus))]
-        public async Task<IActionResult> GetAllBooksStatus() {
+        public async Task<IActionResult> GetAllBooksStatus()
+        {
             return Ok(await unitOfWork.BookRepository.GetBooksStatus());
+        }
+        [HttpPost]
+        [Route(nameof(AddOrUpdateMyBookStatus))]
+        public async Task<IActionResult> AddOrUpdateMyBookStatus(MyBookViewModel mybook)
+        {
+            return Ok(await unitOfWork.BookRepository.AddOrUpdateMyBook(mybook));
         }
 
 
