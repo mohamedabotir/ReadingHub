@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace ReadingHub.Persistence.Models
 
         public byte[] BookFile { get; set; }
         public ICollection<BookComment> Comments { get; set; }
+        public BookStatus BookStatus { get; set; }
         public Book()
         {
             Comments = new List<BookComment>();

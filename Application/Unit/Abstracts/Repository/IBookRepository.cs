@@ -21,5 +21,7 @@ namespace ReadingHub.Unit.Abstracts.Repository
         Task<IEnumerable<BookStatus>> GetBooksStatus();
         Task<bool> AddOrUpdateMyBook(MyBookViewModel book);
         Task<bool> GetMyBooks(MyBookViewModel book);
+        Task<bool> SetMyBookstatus(MyBookStatus bookStatus, string userId);
+        Task<int> GetMyBookStatus(int bookId);
     }
 }

@@ -119,6 +119,24 @@ namespace ReadingHub.Controllers
             return Ok(await unitOfWork.BookRepository.AddOrUpdateMyBook(mybook));
         }
 
+        [HttpGet]
+        [Route(nameof(GetMyBookStatus))]
+        public async Task<IActionResult> GetMyBookStatus(int bookId)
+        {
+            return Ok(await unitOfWork.BookRepository.GetMyBookStatus(bookId));
+        }
+        [HttpPost]
+        [Route(nameof(GetMyBookStatus))]
+        [Authorize]
+        public async Task<IActionResult> SetBookStatus(MyBookStatus book)
+        {
+
+            return Ok(await unitOfWork.BookRepository.SetMyBookstatus(book,
+                User.Claims.FirstOrDefault(e => e.Type == "userId").Value));
+        }
+
+
+
 
     }
 }

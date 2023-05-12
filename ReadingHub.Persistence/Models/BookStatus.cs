@@ -10,5 +10,7 @@ namespace Domain.Models
     {
         public int Id { get; set; }
         public string StatusName { get; set; }
+
+
     }
 }

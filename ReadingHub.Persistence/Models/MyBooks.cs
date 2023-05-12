@@ -18,5 +18,5 @@ namespace ReadingHub.Persistence.Models
         public BookStatus BookStatus { get; set; }
         public int BookStatusId { get; set; }
     }
-     
+
 }

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Hosting;
 using ReadingHub.Cores.Models;
 using ReadingHub.Cores.Validations.Exceptions;
@@ -209,6 +210,24 @@ namespace ReadingHub.Cores.Repository
         public Task<bool> GetMyBooks(MyBookViewModel book)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<int> GetMyBookStatus(int bookId)
+        {
+            var bookstatus = _context.MyBooks
+                .Where(e => e.BookId == bookId).First();
+            GuardException.NotFound(bookstatus, nameof(bookstatus));
+            return Task.FromResult(bookstatus.BookStatusId);
+
+        }
+
+        public Task<bool> SetMyBookstatus(MyBookStatus bookStatus, string userId)
+        {
+            bookStatus.UserId = userId;
+            _context.MyBooks
+                .Update(_mapper.Map<MyBookStatus, MyBooks>(bookStatus));
+            _context.Complete();
+            return Task.FromResult(true);
         }
     }
 }
